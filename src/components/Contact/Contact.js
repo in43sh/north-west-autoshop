@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class Contact extends Component {
   render() {
@@ -6,9 +7,9 @@ export default class Contact extends Component {
       <div className="contact-main-container">
         <form>
           <h1>Contact us</h1>
-          <input/>
-          <input/>
-          <input/>
+          <input />
+          <input />
+          <input />
         </form>
       </div>
     );
