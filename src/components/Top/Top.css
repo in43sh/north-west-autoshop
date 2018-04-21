@@ -1,0 +1,36 @@
+.top-main-container {
+  height: 100vh;
+  background-image: url("../images/repair.jpg");
+  background-position: center center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.top-intro {
+  background-color: rgba(255,255,255,0.8);
+  width: 90%;
+  height: 40%;
+  padding: 30px;
+  box-sizing: border-box;
+  margin: 10px auto;
+}
+
+.top-menu {
+  width: 90%;
+}
+
+.top-menu-option {
+  background-color: rgba(255,255,255,0.8);
+  margin: 35px 0;
+  padding: 20px;
+  cursor: pointer;
+}
+
+
+
+.my-border-radius {
+  border-radius: 10px;
+}
