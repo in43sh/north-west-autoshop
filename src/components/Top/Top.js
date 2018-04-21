@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Top.css';
+import { Link, Redirect } from 'react-router-dom';
 
 export default class Top extends Component {
   render() {
@@ -11,9 +12,11 @@ export default class Top extends Component {
         </div>
 
         <div className="top-menu">
-          <div className="top-menu-option my-border-radius">Repair/Maintenance</div>
-          <div className="top-menu-option my-border-radius">Used Cars</div>
-          <div className="top-menu-option my-border-radius                                                                                                                 ">Parts</div>
+          <div className="top-menu-option my-border-radius">Repair/Maintenance </div>
+          <div className="top-menu-option my-border-radius">Used Cars </div>
+          <Link to="/parts">
+            <div className="top-menu-option my-border-radius">Parts</div>
+          </Link>
         </div>
       </div>
     );

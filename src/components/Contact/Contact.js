@@ -34,9 +34,15 @@ export default class Contact extends Component {
       <div className="contact-main-container">
         <form onSubmit={(event) => this.handleSubmit(event)}>
           <h1>Contact us</h1>
-          <input onChange={(event) => this.handleChange("name", event)}/>
-          <input onChange={(event) => this.handleChange("phone", event)} />
-          <input onChange={(event) => this.handleChange("message", event)} />
+          <div>
+            <input onChange={(event) => this.handleChange("name", event)}/>
+          </div>
+          <div>
+            <input onChange={(event) => this.handleChange("phone", event)} />
+          </div>
+          <div>
+            <input onChange={(event) => this.handleChange("message", event)} />
+          </div>
           <input type="submit"/>
         </form>
       </div>

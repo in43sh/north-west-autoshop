@@ -41,9 +41,8 @@ module.exports = function(app) {
 		request.all(req, res)
 	});
 	app.post("/requests/new", (req, res, next) =>{
-		console.log(req.body);
-		res.json(true)
-		//request.new(req, res);
+		//console.log(req.body);
+		request.new(req, res);
 	});
 	app.post("/requests/delete", (req, res, next) =>{
 		request.delete(req, res);

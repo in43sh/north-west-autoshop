@@ -25,15 +25,16 @@ module.exports = {
         console.log('+++++++++++++++++++')
         var request = new Request({
                 name: req.body.name,
-                description: req.body.description,
+                message: req.body.message,
                 phone: req.body.phone
               });
           request.save()
             .then(saved => {
               console.log('saved!')
-              res.json(true)
+              res.json(saved)
             })
             .catch(err => {
+              console.log(err)
               console.log('saving failed')
               res.json(false)
           })
