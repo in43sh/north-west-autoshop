@@ -1,0 +1,52 @@
+var express = require('express');
+var app = express();
+var mongoose = require('mongoose');
+var bcrypt = require('bcryptjs')
+
+
+var Request = mongoose.model('Request');
+module.exports = {
+   all: function(req, res){
+    console.log("all requests")
+    Request.find({})
+              .then(data => {
+                res.json(data);
+                console.log(data);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+              
+    },
+    new: function(req, res) {
+
+        console.log("++++++++++++++++++++++++++++++++++++")
+        console.log(req.body)
+        console.log('+++++++++++++++++++')
+        var request = new Request({
+                name: req.body.name,
+                description: req.body.description,
+                phone: req.body.phone
+              });
+          request.save()
+            .then(saved => {
+              console.log('saved!')
+              res.json(true)
+            })
+            .catch(err => {
+              console.log('saving failed')
+              res.json(false)
+          })
+            
+  },
+  delete: function(req, res){
+    Request.remove({_id: req.body.id})
+      .then(data=>{
+        res.json(true);
+      })
+      .catch(err=>{
+        res.json(false)
+      })
+  }
+
+}
