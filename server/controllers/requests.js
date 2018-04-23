@@ -25,7 +25,7 @@ module.exports = {
         console.log('+++++++++++++++++++')
         var request = new Request({
                 name: req.body.name,
-                description: req.body.description,
+                message: req.body.message,
                 phone: req.body.phone
               });
           request.save()
