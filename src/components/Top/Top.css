@@ -29,8 +29,17 @@
   cursor: pointer;
 }
 
+.links {
+  text-decoration: none;
+  color: black;
+}
 
+.round-border {
+  border-radius: 5px;
+}
 
-.my-border-radius {
-  border-radius: 10px;
+@media (min-width: 414px) {
+  .top-intro {
+    
+  }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './Contact.css';
 
 export default class Contact extends Component {
   constructor(props) {
@@ -32,18 +33,18 @@ export default class Contact extends Component {
   render() {
     return (
       <div className="contact-main-container">
-        <form onSubmit={(event) => this.handleSubmit(event)}>
-          <h1>Contact us</h1>
-          <div>
-            <input onChange={(event) => this.handleChange("name", event)}/>
+        <form className="contact-form" onSubmit={(event) => this.handleSubmit(event)}>
+          <h1 className="block-title">Contact us</h1>
+          <div className="contact-input-container">
+            <input className="contact-input round-border" onChange={(event) => this.handleChange("name", event)}/>
           </div>
-          <div>
-            <input onChange={(event) => this.handleChange("phone", event)} />
+          <div className="contact-input-container">
+            <input className="contact-input round-border" onChange={(event) => this.handleChange("phone", event)} />
           </div>
-          <div>
-            <input onChange={(event) => this.handleChange("message", event)} />
+          <div className="contact-input-container">
+            <input className="contact-input round-border" onChange={(event) => this.handleChange("message", event)} />
           </div>
-          <input type="submit"/>
+          <input className="contact-button round-border" value="Send" type="submit" />
         </form>
       </div>
     );

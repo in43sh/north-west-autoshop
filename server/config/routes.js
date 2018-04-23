@@ -2,12 +2,13 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var express = require('express');
 var path = require('path');
+
 // Controllers
 var car = require('./../controllers/cars.js');
 var part = require('./../controllers/parts.js');
 var request = require('./../controllers/requests.js');
+
 module.exports = function(app) {
-	
 	// Cars functions
 	app.get("/cars/all", (req, res)=>{
 		car.all(req, res)
