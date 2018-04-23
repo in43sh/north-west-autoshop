@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import Top from './components/Top/Top';
-import Contact from './components/Contact/Contact';
+import routes from './routes/routes';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Top />
-        <Contact />
-      </div>
+      <div>{ routes }</div>
     );
   }
 }

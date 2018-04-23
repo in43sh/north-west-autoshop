@@ -31,9 +31,10 @@ module.exports = {
           request.save()
             .then(saved => {
               console.log('saved!')
-              res.json(true)
+              res.json(saved)
             })
             .catch(err => {
+              console.log(err)
               console.log('saving failed')
               res.json(false)
           })
