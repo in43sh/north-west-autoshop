@@ -19,10 +19,7 @@ export default class Contact extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
     let { name, phone, message } = this.state;
-    console.log(name, phone, message);
-
     axios.post('/requests/new', { name, phone, message })
       .then(response => {
         console.log(response);

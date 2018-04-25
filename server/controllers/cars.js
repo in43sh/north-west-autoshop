@@ -11,7 +11,7 @@ module.exports = {
     Car.find({})
               .then(data => {
                 console.log(data);
-                res.json(true);
+                res.json(data);
               })
               .catch(err => {
                 res.json(false);

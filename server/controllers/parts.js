@@ -14,7 +14,7 @@ module.exports = {
                 res.json(data);
               })
               .catch(err => {
-                res.json(false);
+                res.json(data);
               });
               
     },

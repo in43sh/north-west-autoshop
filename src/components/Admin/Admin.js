@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './Admin.css';
+import AddNewCar from './AddNewCar/AddNewCar';
+import AddNewPart from './AddNewPart/AddNewPart';
 
 export default class Admin extends Component {
   constructor(props) {
@@ -32,32 +34,48 @@ export default class Admin extends Component {
   render() {
     const listOfRequests = this.state.requests.map( request => (
       <div className="admin-requests-container" key={request._id}>
-        <p>{request.name}</p>
-        <p>{request.phone}</p>
-        <p>{request.message}</p>
+        <div>Name: {request.name}</div>
+        <div>Phone: {request.phone}</div>
+        <div>Message: {request.message}</div>
       </div>
     ));
 
-    const listOfCars = this.state.requests.map( car => (
+    const listOfCars = this.state.cars.map( car => (
       <div className="admin-requests-container" key={car._id}>
-        <p>{car.name}</p>
+        <div>Brand: {car.brand}</div>
+        <div>Model: {car.model}</div>
+        <div>Price: {car.price}</div>
+        <div>Color: {car.color}</div>
+        <div>Year: {car.year}</div>
+        <div>Description: {car.description}</div>
+        <div>Photos: {car.photos}</div>
       </div>
     ));
 
-    const listOfParts = this.state.requests.map( part => (
+    const listOfParts = this.state.parts.map( part => (
       <div className="admin-requests-container" key={part._id}>
-        <p>{part.name}</p>
+        <div>Name: {part.name}</div>
+        <div>Brand: {part.brand}</div>
+        <div>Model: {part.model}</div>
+        <div>Price: {part.price}</div>
+        <div>Condition {part.condition}</div>
+        <div>Year: {part.year}</div>
+        <div>Description: {part.description}</div>
+        <div>Photos: {part.photos}</div>
       </div>
     ));
 
     return (
-      <div>
-        <h1>Requests</h1>
+      <div className="admin-main-container">
+        <h1>Admin</h1>
+        <h2>Requests</h2>
         { listOfRequests }
-        <h1>Cars</h1>
+        <h2>Cars</h2>
         { listOfCars }
-        <h1>Parts</h1>
+        <AddNewCar />
+        <h2>Parts</h2>
         { listOfParts }
+        <AddNewPart />
       </div>
     );
   }
