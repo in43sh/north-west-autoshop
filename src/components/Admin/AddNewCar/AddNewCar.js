@@ -34,15 +34,42 @@ export default class AddNewCar extends Component {
   render() {
     return (
       <div className="addnewcar-container">
+      <h2>Add a new car</h2>
         <form className="addnewcar-form" onSubmit={(event) => this.handleSubmit(event)}>
-          Brand: <input onChange={(event) => this.handleChange("brand", event)}/>
-          Model: <input onChange={(event) => this.handleChange("model", event)}/>
-          Price: <input onChange={(event) => this.handleChange("price", event)}/>
-          Color: <input onChange={(event) => this.handleChange("color", event)}/>
-          Year: <input onChange={(event) => this.handleChange("year", event)}/>
-          Mileage: <input onChange={(event) => this.handleChange("mileage", event)}/>
-          Description: <input onChange={(event) => this.handleChange("description", event)}/>
-          <input type="submit" />
+          <table>
+                <tr>
+                  <th>Options</th>
+                  <th>Parametres</th>
+                </tr>
+              <tr>
+                <td><p class="inputparagraph">Brand:</p></td> <td><input onChange={(event) => this.handleChange("brand", event)} class="input"/></td>
+              </tr>
+              <tr>
+              <td><p class="inputparagraph">Model: </p></td> <td><input onChange={(event) => this.handleChange("model", event)} class="input"/></td>
+              </tr>
+
+              <tr>
+              <td><p class="inputparagraph">Price: </p></td> <td><input onChange={(event) => this.handleChange("price", event)} class="input"/></td>
+              </tr>
+              
+              <tr>
+              <td><p class="inputparagraph">Color: </p></td> <td><input onChange={(event) => this.handleChange("color", event)} class="input"/></td>
+              </tr>
+              
+              <tr>
+              <td><p class="inputparagraph">Year: </p></td> <td><input onChange={(event) => this.handleChange("year", event)} class="input"/></td>
+              </tr>
+              
+              <tr>
+              <td><p class="inputparagraph">Mileage: </p></td> <td><input onChange={(event) => this.handleChange("mileage", event)} class="input"/></td>
+              </tr>
+              
+              <tr>
+                
+              <td><p class="inputparagraph">Description: </p></td> <td><input onChange={(event) => this.handleChange("description", event)} class="input"/></td>
+              </tr>
+              <input type="submit" class="input" class="btn btn-primary"/>
+          </table>
         </form>
       </div>
     );

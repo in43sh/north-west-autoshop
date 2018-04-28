@@ -24,6 +24,7 @@ module.exports = {
         // console.log(req.body)
         // console.log('+++++++++++++++++++')
         var part = new Part({
+                title: req.body.title,
                 brand: req.body.brand,
                 model: req.body.model,
                 price: req.body.price,

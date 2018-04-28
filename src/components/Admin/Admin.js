@@ -38,6 +38,20 @@ export default class Admin extends Component {
       })
       .catch(error => console.log(error));
   }
+  handleCarDelete(i) {
+    axios.post('/cars/delete', { i })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => console.log(error));
+  }
+  handleRequestDelete(i) {
+    axios.post('/requests/delete', { i })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => console.log(error));
+  }
 
   render() {
     const listOfRequests = this.state.requests.map( request => (
@@ -45,6 +59,7 @@ export default class Admin extends Component {
         <div>Name: {request.name}</div>
         <div>Phone: {request.phone}</div>
         <div>Message: {request.message}</div>
+        <button class="btn btn-danger" onClick={() => this.handleRequestDelete(request._id)}>Delete</button>
       </div>
     ));
 
@@ -57,12 +72,13 @@ export default class Admin extends Component {
         <div>Year: {car.year}</div>
         <div>Description: {car.description}</div>
         <div>Photos: {car.photos}</div>
+        <button class="btn btn-danger" onClick={() => this.handleCarDelete(car._id)}>Delete</button>
       </div>
     ));
 
     const listOfParts = this.state.parts.map((part, index) => (
       <div className="admin-requests-container" key={index}>
-        <div>Name: {part.name}</div>
+        <div><h3>Title: {part.title}</h3></div>
         <div>Brand: {part.brand}</div>
         <div>Model: {part.model}</div>
         <div>Price: {part.price}</div>
@@ -70,7 +86,7 @@ export default class Admin extends Component {
         <div>Year: {part.year}</div>
         <div>Description: {part.description}</div>
         <div>Photos: {part.photos}</div>
-        <button onClick={() => this.handleDelete(part._id)}>delete</button>
+        <button class="btn btn-danger" onClick={() => this.handleDelete(part._id)}>Delete</button>
       </div>
     ));
 

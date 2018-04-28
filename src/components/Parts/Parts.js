@@ -26,16 +26,32 @@ export default class Parts extends Component {
   render() {
     const listOfParts = this.state.parts.map((part, index) => {
       return (
-        <div className="parts-item-container" key={index}>
-          <img className="parts-img" src={aws} alt="part"/>
-          <p>{ part.model }</p>
-        </div>
+
+        <div id="box" key={index}>
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-12" id="top" >
+                      <h1 id="title">{ part.title }</h1>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-4"><img src={aws} alt="part" id="photo"></img></div>
+                  <div class="col-md-4">
+                      <p id="model">{ part.year } { part.brand } { part.model }</p>
+                      <p id="condition">Condition: { part.condition} </p>
+                  </div>
+                  <div class="col-md-4">
+                      <p id="price">${ part.price }</p>
+                  </div>
+              </div>
+            </div>
+          </div>
       )})
 
 
     return (
       <div className="parts-main-container">
-        <h1>SUKA PARTS</h1>
+        <h1>List of parts</h1>
         { listOfParts }
       </div>
     );
