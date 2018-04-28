@@ -24,7 +24,7 @@ module.exports = function(app) {
 	});
 
 	// Parts functions
-	app.get("/parts/all", (req,res,next)=>{
+	app.get("/parts/all", (req, res, next)=>{
 		part.all(req, res)
 	});
 	app.post("/parts/new", (req, res, next) => {

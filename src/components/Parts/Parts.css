@@ -1,0 +1,13 @@
+.parts-main-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.parts-item-container img {
+  background-color: yellow;
+}
+
+.parts-img {
+  max-height: 150px;
+}

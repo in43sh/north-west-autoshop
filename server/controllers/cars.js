@@ -7,10 +7,10 @@ var bcrypt = require('bcryptjs')
 var Car = mongoose.model('Car');
 module.exports = {
    all: function(req, res){
-    console.log("all cars")
+    // console.log("all cars")
     Car.find({})
               .then(data => {
-                console.log(data);
+                // console.log(data);
                 res.json(data);
               })
               .catch(err => {
@@ -20,9 +20,9 @@ module.exports = {
     },
     new: function(req, res) {
 
-        console.log("++++++++++++++++++++++++++++++++++++")
-        console.log(req.body)
-        console.log('+++++++++++++++++++')
+        // console.log("++++++++++++++++++++++++++++++++++++")
+        // console.log(req.body)
+        // console.log('+++++++++++++++++++')
         var car = new Car({
                 brand: req.body.brand,
                 model: req.body.model,

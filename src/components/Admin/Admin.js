@@ -25,10 +25,18 @@ export default class Admin extends Component {
         cars: cars.data,
         parts: parts.data
       })
-      console.log('requests ', this.state.requests);
-      console.log('cars ', this.state.cars);
-      console.log('parts ', this.state.parts);
+      // console.log('requests ', this.state.requests);
+      // console.log('cars ', this.state.cars);
+      // console.log('parts ', this.state.parts);
     })).catch(err => console.log(err));
+  }
+
+  handleDelete(i) {
+    axios.post('/parts/delete', { i })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => console.log(error));
   }
 
   render() {
@@ -52,8 +60,8 @@ export default class Admin extends Component {
       </div>
     ));
 
-    const listOfParts = this.state.parts.map( part => (
-      <div className="admin-requests-container" key={part._id}>
+    const listOfParts = this.state.parts.map((part, index) => (
+      <div className="admin-requests-container" key={index}>
         <div>Name: {part.name}</div>
         <div>Brand: {part.brand}</div>
         <div>Model: {part.model}</div>
@@ -62,6 +70,7 @@ export default class Admin extends Component {
         <div>Year: {part.year}</div>
         <div>Description: {part.description}</div>
         <div>Photos: {part.photos}</div>
+        <button onClick={() => this.handleDelete(part._id)}>delete</button>
       </div>
     ));
 

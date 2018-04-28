@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import aws from '../images/aws.png';
+
+import './Parts.css';
 
 export default class Parts extends Component {
   constructor(props) {
@@ -8,54 +11,30 @@ export default class Parts extends Component {
       parts : []
     };
   }
-  
-  // componentWillMount(){
-  //   console.log("one")
-  //   axios.get("/parts/all", function(data, err){
-  //     console.log("two")
-  //     if(data){
-  //       console.log(data)
-  //       this.state.parts = data;
-  //     }else{
-  //       console.log(err)
-  //     }
-  //   })
-  // }
+
 
   componentWillMount(){
     axios.get('/parts/all')
       .then(res => {
-        //console.log(res);
-        var myArr = [];
-        myArr.push(res.data[0]);
-        this.test(myArr)
-        this.setState({ parts: this.test(myArr) })
+        console.log(res);
+        this.setState({ parts: res.data })
       })
       .catch(error => console.log(error));
-
-  }
-  test(arr){
-    let res = [];
-    for(let i = 0; i < arr.length; i++){
-      res.push(arr[i])
-    }
-    // console.log(res)
-    return res
   }
 
 
   render() {
     const listOfParts = this.state.parts.map((part, index) => {
       return (
-        <div key={index}>
-        <p>{part.name}</p>
-        <p>{part._id}</p>
-      </div>
-      )} )
+        <div className="parts-item-container" key={index}>
+          <img className="parts-img" src={aws} alt="part"/>
+          <p>{ part.model }</p>
+        </div>
+      )})
 
 
     return (
-      <div>
+      <div className="parts-main-container">
         <h1>SUKA PARTS</h1>
         { listOfParts }
       </div>

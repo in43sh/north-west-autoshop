@@ -7,10 +7,10 @@ var bcrypt = require('bcryptjs')
 var Part = mongoose.model('Part');
 module.exports = {
    all: function(req, res){
-    console.log("all parts")
+    // console.log("all parts")
     Part.find({})
               .then(data => {
-                console.log(data);
+                // console.log(data);
                 res.json(data);
               })
               .catch(err => {
@@ -20,9 +20,9 @@ module.exports = {
     },
     new: function(req, res) {
 
-        console.log("++++++++++++++++++++++++++++++++++++")
-        console.log(req.body)
-        console.log('+++++++++++++++++++')
+        // console.log("++++++++++++++++++++++++++++++++++++")
+        // console.log(req.body)
+        // console.log('+++++++++++++++++++')
         var part = new Part({
                 brand: req.body.brand,
                 model: req.body.model,
@@ -45,8 +45,11 @@ module.exports = {
             
   },
   delete: function(req, res){
-    Part.remove({_id: req.body.id})
+    console.log('req.body ---->', req.body);
+    console.log('req.body.id ---->', req.body.i);
+    Part.remove({_id: req.body.i})
       .then(data=>{
+        // console.log(req.body);
         res.json(true);
       })
       .catch(err=>{
