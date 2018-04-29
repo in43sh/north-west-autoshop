@@ -11,6 +11,7 @@
 .projects-clean {
   background-image:url(../images/repair.jpg);
   background-size:cover;
+  background-attachment: fixed;
 }
 
 .projects-clean {

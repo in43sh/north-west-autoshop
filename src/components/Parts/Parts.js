@@ -28,7 +28,7 @@ export default class Parts extends Component {
       return (
 
         <div id="box" key={index}>
-          <div class="container">
+          <div class="container" id="part">
               <div class="row">
                   <div class="col-md-12" id="top" >
                       <h1 id="title">{ part.title }</h1>
@@ -50,8 +50,8 @@ export default class Parts extends Component {
 
 
     return (
-      <div className="parts-main-container">
-        <h1>List of parts</h1>
+      <div className="parts-main-container" id="main">
+        <h1 id="list_name">List of parts</h1>
         { listOfParts }
       </div>
     );

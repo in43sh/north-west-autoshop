@@ -1,3 +1,8 @@
+#main {
+  background-image:url(../images/repair.jpg);
+  background-size:cover;
+  background-attachment: fixed;
+}
 .parts-main-container {
   width: 100%;
   display: flex;
@@ -24,13 +29,17 @@
   margin:5px 50px;
   
 }
-
+#list_name{
+  color: white;
+}
 #top {
   background-color:#282d32;
-  border-radius: 15px;
+  /* border-radius: 15px; */
 }
 
-p {
+#part {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
 }
 
 #model {

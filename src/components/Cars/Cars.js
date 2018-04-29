@@ -24,7 +24,7 @@ export default class Cars extends Component {
       return (
 
         <div id="box" key={index}>
-          <div class="container">
+          <div class="container" id="car">
               <div class="row">
                   <div class="col-md-12" id="top" >
                       <h1 id="title">{ car.year } { car.brand } { car.model }</h1>
@@ -44,8 +44,8 @@ export default class Cars extends Component {
           </div>
       )})
     return (
-      <div className="parts-main-container">
-        <h1>List of Cars</h1>
+      <div className="parts-main-container" id="main">
+        <h1 id="list_name">List of Cars</h1>
         { listOfCars }
       </div>
     );
