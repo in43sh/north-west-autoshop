@@ -59,7 +59,7 @@ export default class Admin extends Component {
         <div>Name: {request.name}</div>
         <div>Phone: {request.phone}</div>
         <div>Message: {request.message}</div>
-        <button class="btn btn-danger" onClick={() => this.handleRequestDelete(request._id)}>Delete</button>
+        <button className="btn btn-danger" onClick={() => this.handleRequestDelete(request._id)}>Delete</button>
       </div>
     ));
 
@@ -72,7 +72,7 @@ export default class Admin extends Component {
         <div>Year: {car.year}</div>
         <div>Description: {car.description}</div>
         <div>Photos: {car.photos}</div>
-        <button class="btn btn-danger" onClick={() => this.handleCarDelete(car._id)}>Delete</button>
+        <button className="btn btn-danger" onClick={() => this.handleCarDelete(car._id)}>Delete</button>
       </div>
     ));
 
@@ -86,7 +86,7 @@ export default class Admin extends Component {
         <div>Year: {part.year}</div>
         <div>Description: {part.description}</div>
         <div>Photos: {part.photos}</div>
-        <button class="btn btn-danger" onClick={() => this.handleDelete(part._id)}>Delete</button>
+        <button className="btn btn-danger" onClick={() => this.handleDelete(part._id)}>Delete</button>
       </div>
     ));
 

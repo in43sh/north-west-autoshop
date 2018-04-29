@@ -35,7 +35,7 @@ export default class Parts extends Component {
                   </div>
               </div>
               <div class="row">
-                  <div class="col-md-4"><img src={aws} alt="part" id="photo"></img></div>
+                  <div class="col-md-4"><img src={aws} alt="part" id="photo"/></div>
                   <div class="col-md-4">
                       <p id="model">{ part.year } { part.brand } { part.model }</p>
                       <p id="condition">Condition: { part.condition} </p>

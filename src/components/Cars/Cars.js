@@ -31,7 +31,7 @@ export default class Cars extends Component {
                   </div>
               </div>
               <div class="row">
-                  <div class="col-md-4"><img src={aws} alt="part" id="photo"></img></div>
+                  <div class="col-md-4"><img src={aws} alt="part" id="photo"/></div>
                   <div class="col-md-4">
                       <p id="model">Mileage: { car.mileage } Color: { car.color }</p>
                       <p id="condition">{ car.description }</p>
