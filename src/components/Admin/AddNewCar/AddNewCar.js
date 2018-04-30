@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { urlsend } from '../../../redux/ducks/reducer';
 import './AddNewCar.css';
 
-export default class AddNewCar extends Component {
+import Uploader from '../../Uploader/Uploader';
+
+class AddNewCar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,6 +66,9 @@ export default class AddNewCar extends Component {
               <tr>
               <td><p className="inputparagraph">Description: </p></td> <td><input onChange={(event) => this.handleChange("description", event)} className="input"/></td>
               </tr>
+              <tr>
+              <td><p className="inputparagraph">Photo: </p></td> <td><Uploader/></td>
+              </tr>
               <input type="submit" className="btn btn-primary input" />
           </table>
         </form>
@@ -69,3 +76,11 @@ export default class AddNewCar extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    url: state.url
+  }
+}
+
+export default connect(mapStateToProps, null)(AddNewCar);

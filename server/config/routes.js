@@ -2,6 +2,26 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var express = require('express');
 var path = require('path');
+const app = express();
+const multer =  require('multer');
+const AWS = require('aws-sdk');
+require('dotenv').config();
+
+// AWS uploader
+AWS.config.update({
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  region: process.env.REGION
+});
+const s3 = new AWS.S3();
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 52428800
+  }
+})
+
+
 
 // Controllers
 var car = require('./../controllers/cars.js');
@@ -56,6 +76,27 @@ module.exports = function(app) {
 	app.post("/requests/edit", (req, res, next) => {
 		request.edit(req, res);
 	})
+
+	app.post('/api/upload', upload.single('item'), (req, res) => {
+		var params = {
+			Bucket: process.env.BUCKET,
+			Key: req.file.originalname, 
+			Body: req.file.buffer,
+			ContentType: "image/png",
+			ACL: 'public-read'
+		}
+		// s3.putObject() puts the image to the AWS bucket. If the file is already there
+		// it won't give any error, just make view that file is uploaded again though
+		// it just checked if it's in there
+		s3.putObject(params, (err) => { 
+			// console.log(err);
+			if (err) return res.status(400).send(err);
+		})
+		var imageUrl = 'https://s3.amazonaws.com/' + params.Bucket + '/'+ params.Key
+		res.status(200).send(imageUrl);
+	});
+
+
 
 
 

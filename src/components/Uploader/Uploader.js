@@ -4,7 +4,7 @@ import request  from 'superagent';
 import './Uploader.css';
 
 import { connect } from 'react-redux';
-import { urlsend } from '../../../redux/ducks/reducer';
+import { urlsend } from '../../redux/ducks/reducer';
 
 class Uploader extends Component {
   constructor() {
@@ -18,7 +18,7 @@ class Uploader extends Component {
   onDrop = (files) => {
     request
     .post('/api/upload')
-    .attach('painting', files[0]) // 'painting' has to match with another string in /server/index.js (line 38)
+    .attach('item', files[0]) // 'painting' has to match with another string in /server/index.js (line 38)
     .end((error, response) => {
       this.setState({ url: response.text })
       this.props.urlsend(response.text)
