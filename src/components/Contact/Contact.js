@@ -29,7 +29,7 @@ export default class Contact extends Component {
 
   render() {
     return (
-      <div className="contact-main-container">
+      <div id="_contact" className="contact-main-container">
         <form className="contact-form" onSubmit={(event) => this.handleSubmit(event)}>
           <h1 className="block-title">Contact us</h1>
           <div className="contact-input-container">

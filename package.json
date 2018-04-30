@@ -16,9 +16,9 @@
     "mongoose": "^4.10.8",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-dropzone-s3-uploader": "^1.1.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-scroll-to-element": "^0.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
