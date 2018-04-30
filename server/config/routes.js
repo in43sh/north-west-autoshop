@@ -16,6 +16,11 @@ module.exports = function(app) {
 	app.post("/cars/new", (req, res, next) => {
 		car.new(req, res)
 	});
+	app.post("/cars/find", (req, res, next) => {
+		console.log(req.body)
+		console.log("CAR BY ID")
+		car.find(req, res)
+	});
 	app.post("/cars/delete", (req, res, next) => {
 		car.delete(req, res)
 	});

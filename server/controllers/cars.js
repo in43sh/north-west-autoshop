@@ -18,6 +18,19 @@ module.exports = {
               });
               
     },
+    find: function(req, res){
+      // console.log("all cars")
+      Car.findOne({_id: req.body._id})
+                .then(data => {
+                  // console.log(data);
+                  res.json(data);
+                })
+                .catch(err => {
+                  res.json(false);
+                });
+                
+      },
+
     new: function(req, res) {
 
         // console.log("++++++++++++++++++++++++++++++++++++")

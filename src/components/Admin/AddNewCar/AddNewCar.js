@@ -62,7 +62,7 @@ export default class AddNewCar extends Component {
               <tr>
               <td><p className="inputparagraph">Description: </p></td> <td><input onChange={(event) => this.handleChange("description", event)} className="input"/></td>
               </tr>
-              <input type="submit" className="input" className="btn btn-primary"/>
+              <input type="submit" className="btn btn-primary input" />
           </table>
         </form>
       </div>
