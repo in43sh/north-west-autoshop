@@ -77,25 +77,27 @@ module.exports = function(app) {
 	})
 
 	// Users functions
-	app.post('/user/new', (req, res, next)=>{
-		console.log('recieve, registraion!!!!!!!!!!')
+	app.post('/user/register', (req, res, next)=>{
+		console.log('routes.js: registration completed')
 		console.log('----------------------------------')
-		user.new(req, res)
+		user.register(req, res)
 	});
 	app.post('/user/login', (req, res, next)=>{
-		console.log('recieve, login!!!!!!!!!!')
+		console.log('routes.js: you are logged in')
 		console.log('----------------------------------')
 		user.login(req, res)
 	});
 	app.post("/user/logout", (req, res, next)=>{
-		console.log('routes.js: logouting user in session!!!!!!!!!!')
-		console.log('----------------------------------')
+		console.log('routes.js: you are logged out')
 		user.logout(req, res)
+	});
+	app.get("/user/data", (req, res, next)=>{
+		console.log('routes.js: retrieveing user data')
+		user.getUserData(req, res)
 	});
 	app.get("/user/all", (req, res, next)=>{
 		console.log('routes.js: retrieveing all users')
-		console.log('----------------------------------')
-		user.showAll(req, res)
+		user.all(req, res)
 	});
 
 	app.post('/api/upload', upload.single('item'), (req, res) => {

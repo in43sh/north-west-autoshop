@@ -1,84 +1,60 @@
-var express = require('express');
+var express = require("express");
 var app = express();
-var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs')
+var mongoose = require("mongoose");
+var bcrypt = require("bcryptjs");
 
-
-var User = mongoose.model('User');
+var User = mongoose.model("User");
 module.exports = {
-    all: function(req, res){
+  register: (req, res) => {
+    // console.log("++++++++++++++++++++++++++++++++++++")
+    console.log('req.body ---->', req.bodyrs)
+    // console.log('+++++++++++++++++++')
+    const { username, password } = req.body;
+    const user = new User({
+      username: username,
+      password: password
+    });
+    req.session.user = { username };
+    user
+      .save()
+      .then(saved => {
+        console.log("saved!");
+        res.status(200).json({ user: req.session.user });
+      })
+      .catch(err => {
+        console.log("saving failed");
+        console.log(err);
+        res.status(500).json(false);
+      });
+  },
+  login: (req, res) => {
+    User.findOne({ username: req.body.username })
+      .then(data => {
+        // console.log(data);
+        req.session.user = { username: data.username };
+        res.status(200).json( req.session.user );
+      })
+      .catch(err => {
+        res.status(500).json(false);
+      });
+  },
+  logout: (req, res) => {
+    req.session.destroy();
+    res.status(200).send();
+  },
+  getUserData: (req, res, next) => {
+    // console.log('req.session ->', req.session)
+    res.json({ user: req.session.user })
+  },
+  all: (req, res) => {
     // console.log("all cars")
-    User.find({})
-              .then(data => {
-                // console.log(data);
-                res.status(200).json(data);
-              })
-              .catch(err => {
-                res.status(500).json(false);
-              });
-              
-    },
-
-    find: function(req, res){
-      // console.log("all cars")
-      User.findOne({_id: req.body._id})
-                .then(data => {
-                  // console.log(data);
-                  res.status(200).json(data);
-                })
-                .catch(err => {
-                  res.status(500).json(false);
-                });
-                
-      },
-
-    new: function(req, res) {
-        // console.log("++++++++++++++++++++++++++++++++++++")
-        // console.log(req.body)
-        // console.log('+++++++++++++++++++')
-        var user = new User({
-                username: req.body.username,
-                password: req.body.password
-              });
-          user.save()
-            .then(saved => {
-              console.log('saved!')
-              res.status(200).json(true)
-            })
-            .catch(err => {
-              console.log('saving failed')
-              console.log(err)
-              res.status(500).json(false)
-          })
-            
-  },
-  delete: function(req, res){
-    User.remove({_id: req.body.id})
-      .then(data=>{
-        res.status(200).json(true);
+    Car.find({})
+      .then(data => {
+        // console.log(data);
+        res.status(200).json(data);
       })
-      .catch(err=>{
-        res.status(500).json(false)
-      })
-  },
-  edit: function(req, res){
-    User.findByIdAndUpdate({ _id: req.body.id }, {
-        brand: req.body.brand,
-        model: req.body.model,
-        price: req.body.price,
-        color: req.body.color,
-        year: req.body.year,
-        mileage: req.body.mileage,
-        description: req.body.description,
-        photos: req.body.photos
-    }, function(data, err){
-      if(data){
-        res.status(200).json(true)
-      }else{
-        res.status(500).json(false)
-      }
-    })
-      
+      .catch(err => {
+        res.status(500).json(false);
+      });
   }
-
-}
+};

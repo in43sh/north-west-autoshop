@@ -8,7 +8,11 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 require('./config/mongoose.js');
-const session = require('express-session')
+
+// Middlewares
+const checkForSession = require('./middlewares/checkForSession');
+
+const session = require('express-session');
 app.use( session({
   secret: process.env.SECRET,
   saveUninitialized: false,
@@ -17,6 +21,7 @@ app.use( session({
     maxAge: 200 * 1000
   }
 }) );
+app.use( checkForSession );
 app.use(bodyParser.urlencoded({ extended: true }));
 const path = require('path');
 app.use(express.static(path.join(__dirname, '/client/dist')));

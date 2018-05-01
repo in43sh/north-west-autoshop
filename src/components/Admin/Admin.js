@@ -3,8 +3,10 @@ import axios from 'axios';
 import './Admin.css';
 import AddNewCar from './AddNewCar/AddNewCar';
 import AddNewPart from './AddNewPart/AddNewPart';
+import { connect } from 'react-redux';
+import { login } from '../../redux/ducks/reducer';
 
-export default class Admin extends Component {
+class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,21 +16,38 @@ export default class Admin extends Component {
     };
   }
 
-  componentWillMount() {
-    axios.all([
-      axios.get(`/requests/all`),
-      axios.get(`/cars/all`),
-      axios.get(`/parts/all`)
-    ]).then(axios.spread( (requests, cars, parts) => {
-      this.setState({
-        requests: requests.data,
-        cars: cars.data,
-        parts: parts.data
+  logout = () => {
+    axios.post('/user/logout')
+      .then(response => {
+        this.props.login(null)
+        console.log('you are logged out')
       })
-      // console.log('requests ', this.state.requests);
-      // console.log('cars ', this.state.cars);
-      // console.log('parts ', this.state.parts);
-    })).catch(err => console.log(err));
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  componentWillMount() {
+    console.log('this.props -> ', this.props);
+    axios.get('/user/data').then(response => {
+      if (response.data.user) {
+        // this.props.login(response.data.user);
+      }
+      axios.all([
+        axios.get(`/requests/all`),
+        axios.get(`/cars/all`),
+        axios.get(`/parts/all`)
+      ]).then(axios.spread( (requests, cars, parts) => {
+        this.setState({
+          requests: requests.data,
+          cars: cars.data,
+          parts: parts.data
+        })
+        // console.log('requests ', this.state.requests);
+        // console.log('cars ', this.state.cars);
+        // console.log('parts ', this.state.parts);
+      })).catch(err => console.log(err));
+    }).catch(error => console.log(error))
   }
 
   handleDelete(i) {
@@ -54,6 +73,8 @@ export default class Admin extends Component {
   }
 
   render() {
+    const { user } = this.props;
+
     const listOfRequests = this.state.requests.map( request => (
       <div className="admin-requests-container" key={request._id}>
         <div>Name: {request.name}</div>
@@ -92,6 +113,7 @@ export default class Admin extends Component {
 
     return (
       <div className="admin-main-container">
+        <button onClick={ this.logout}>Log out</button>
         <h1>Admin</h1>
         <h2>Requests</h2>
         { listOfRequests }
@@ -105,3 +127,15 @@ export default class Admin extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+const mapDispatchToProps = {
+  login: login
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

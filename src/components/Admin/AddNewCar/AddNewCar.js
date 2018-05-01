@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { urlsend } from "../../../redux/ducks/reducer";
+// import { urlsend } from "../../../redux/ducks/reducer";
 import "./AddNewCar.css";
 
 import Uploader from "../../Uploader/Uploader";
