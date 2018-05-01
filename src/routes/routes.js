@@ -5,6 +5,7 @@ import Cars from '../components/Cars/Cars';
 import Parts from '../components/Parts/Parts';
 import Admin from '../components/Admin/Admin';
 import OneCar from '../components/Cars/OneCar/OneCar';
+import NotFound from  '../components/NotFound/NotFound';
 
 export default (
   <Switch>
@@ -14,5 +15,6 @@ export default (
     <Route path="/parts" component={ Parts }/>
     <Route path="/admin" component={ Admin }/>
     
+    <Route path="*" component={ NotFound }/>
   </Switch>
 )
