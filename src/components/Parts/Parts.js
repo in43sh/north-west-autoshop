@@ -12,7 +12,6 @@ export default class Parts extends Component {
     };
   }
 
-
   componentWillMount(){
     axios.get('/parts/all')
       .then(res => {
@@ -28,19 +27,19 @@ export default class Parts extends Component {
       return (
 
         <div id="box" key={index}>
-          <div class="container" id="part">
-              <div class="row">
-                  <div class="col-md-12" id="top" >
+          <div className="container" id="part">
+              <div className="row">
+                  <div className="col-md-12" id="top" >
                       <h1 id="title">{ part.title }</h1>
                   </div>
               </div>
-              <div class="row">
-                  <div class="col-md-4"><img src={aws} alt="part" id="photo"/></div>
-                  <div class="col-md-4">
+              <div className="row">
+                  <div className="col-md-4"><img src={aws} alt="part" id="photo"/></div>
+                  <div className="col-md-4">
                       <p id="model">{ part.year } { part.brand } { part.model }</p>
                       <p id="condition">Condition: { part.condition} </p>
                   </div>
-                  <div class="col-md-4">
+                  <div className="col-md-4">
                       <p id="price">${ part.price }</p>
                   </div>
               </div>

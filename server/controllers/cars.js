@@ -11,10 +11,10 @@ module.exports = {
     Car.find({})
               .then(data => {
                 // console.log(data);
-                res.json(data);
+                res.status(200).json(data);
               })
               .catch(err => {
-                res.json(false);
+                res.status(500).json(false);
               });
               
     },
@@ -23,10 +23,10 @@ module.exports = {
       Car.findOne({_id: req.body._id})
                 .then(data => {
                   // console.log(data);
-                  res.json(data);
+                  res.status(200).json(data);
                 })
                 .catch(err => {
-                  res.json(false);
+                  res.status(500).json(false);
                 });
                 
       },
@@ -49,22 +49,22 @@ module.exports = {
           car.save()
             .then(saved => {
               console.log('saved!')
-              res.json(true)
+              res.status(200).json(true)
             })
             .catch(err => {
               console.log('saving failed')
               console.log(err)
-              res.json(false)
+              res.status(500).json(false)
           })
             
   },
   delete: function(req, res){
     Car.remove({_id: req.body.id})
       .then(data=>{
-        res.json(true);
+        res.status(200).json(true);
       })
       .catch(err=>{
-        res.json(false)
+        res.status(500).json(false)
       })
   },
   edit: function(req, res){
@@ -79,9 +79,9 @@ module.exports = {
         photos: req.body.photos
     }, function(data, err){
       if(data){
-        res.json(true)
+        res.status(200).json(true)
       }else{
-        res.json(false)
+        res.status(500).json(false)
       }
     })
       

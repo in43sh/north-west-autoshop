@@ -11,6 +11,7 @@ export default class Cars extends Component {
       cars : []
     };
   }
+  
   componentWillMount(){
     axios.get('/cars/all')
       .then(res => {

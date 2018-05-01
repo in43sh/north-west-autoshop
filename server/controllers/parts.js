@@ -11,7 +11,7 @@ module.exports = {
     Part.find({})
               .then(data => {
                 // console.log(data);
-                res.json(data);
+                res.status(200).json(data);
               })
               .catch(err => {
                 res.json(data);
@@ -36,7 +36,7 @@ module.exports = {
           part.save()
             .then(saved => {
               console.log('saved!')
-              res.json(true)
+              res.status(200).json(true)
             })
             .catch(err => {
               console.log('saving failed')
@@ -51,7 +51,7 @@ module.exports = {
     Part.remove({_id: req.body.i})
       .then(data=>{
         // console.log(req.body);
-        res.json(true);
+        res.status(200).json(true);
       })
       .catch(err=>{
         res.json(false)
@@ -68,7 +68,7 @@ module.exports = {
                 photos: req.body.photos
     }, function(data, err){
       if(data){
-        res.json(true)
+        res.status(200).json(true)
       }else{
         res.json(false)
       }
