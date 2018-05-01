@@ -21,12 +21,11 @@ const upload = multer({
   }
 })
 
-
-
 // Controllers
 var car = require('./../controllers/cars.js');
 var part = require('./../controllers/parts.js');
 var request = require('./../controllers/requests.js');
+var user = require('./../controllers/users.js');
 
 module.exports = function(app) {
 	// Cars functions
@@ -77,6 +76,28 @@ module.exports = function(app) {
 		request.edit(req, res);
 	})
 
+	// Users functions
+	app.post('/user/new', (req, res, next)=>{
+		console.log('recieve, registraion!!!!!!!!!!')
+		console.log('----------------------------------')
+		user.new(req, res)
+	});
+	app.post('/user/login', (req, res, next)=>{
+		console.log('recieve, login!!!!!!!!!!')
+		console.log('----------------------------------')
+		user.login(req, res)
+	});
+	app.post("/user/logout", (req, res, next)=>{
+		console.log('routes.js: logouting user in session!!!!!!!!!!')
+		console.log('----------------------------------')
+		user.logout(req, res)
+	});
+	app.get("/user/all", (req, res, next)=>{
+		console.log('routes.js: retrieveing all users')
+		console.log('----------------------------------')
+		user.showAll(req, res)
+	});
+
 	app.post('/api/upload', upload.single('item'), (req, res) => {
 		var params = {
 			Bucket: process.env.BUCKET,
@@ -97,41 +118,9 @@ module.exports = function(app) {
 	});
 
 
-
-
-
-
-
-
-
-
-
-
-
 }
-// 	console.log("ROUTINGS");
-// 	///// users
-//   	app.post('/user/new', (req, res, next)=>{
-// 	  console.log('recieve, registraion!!!!!!!!!!')
-// 	  console.log('----------------------------------')
-// 	  user.create(req, res)
-// 	});
-// 	app.post('/user/login', (req, res, next)=>{
-// 	  console.log('recieve, login!!!!!!!!!!')
-// 	  console.log('----------------------------------')
-// 	  user.login(req, res)
-// 	});
-// 	app.post("/user/logout", (req, res, next)=>{
-// 	  console.log('routes.js: logouting user in session!!!!!!!!!!')
-// 	  console.log('----------------------------------')
-// 	  user.logout(req, res)
-// 	});
-// 	app.get("/user/all", (req, res, next)=>{
-// 	  console.log('routes.js: retrieveing all users')
-// 	  console.log('----------------------------------')
-// 	  user.showAll(req, res)
-// 	});
 
+// console.log("ROUTINGS");
 // 	////////////////// officials
 // 	app.get('/official/everyone', (req, res, next)=>{
 // 	  console.log('everyone')
