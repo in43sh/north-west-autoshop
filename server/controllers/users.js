@@ -43,7 +43,7 @@ module.exports = {
     res.status(200).send();
   },
   getUserData: (req, res, next) => {
-    // console.log('req.session ->', req.session)
+    console.log('req.session ->', req.session)
     res.json({ user: req.session.user })
   },
   all: (req, res) => {

@@ -6,9 +6,17 @@ const initialState = {
 // action type 
 const LOGIN = 'LOGIN';
 const URLSEND = 'URLSEND';
+const GETUSER = 'GETUSER';
 
 // action creators
 export const login = (user) => {
+  return {
+    type: LOGIN,
+    payload: user
+  };
+};
+
+export const getUser = (user) => {
   return {
     type: LOGIN,
     payload: user
@@ -27,6 +35,9 @@ const reducer = (state = initialState, action) => {
   // const { type, payload } = action
   switch (action.type) {
     case LOGIN:
+      return { ...state, user: action.payload };
+
+    case GETUSER:
       return { ...state, user: action.payload };
 
     case URLSEND:

@@ -5,20 +5,31 @@ import './Login.css';
 import { connect } from 'react-redux';
 import { login } from '../../../redux/ducks/reducer'
 
-class Admin extends Component {
+class Login extends Component {
   constructor () {
     super();
     this.state = {
       userInput: '',
       passInput: '',
-      // message: '',
       errorMessage: ''
     }
   }
 
-  componentDidMount() {
-    if (this.props.user) {
+  componentWillMount() {
+    axios.get('/user/data')
+      .then(response => {
+        console.log(response);
+        if (response.data.user) {
+          this.props.login(response.data.user);
+        }
+      })
+      .catch(error => console.log(error))
+
+    if (this.props.user!=null) {
+      if(this.props.user.username!=null){
+
       this.props.history.push('/admin');
+      }
     }
   }
 
@@ -77,4 +88,4 @@ const mapDispatchToProps = {
   login: login
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Admin);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

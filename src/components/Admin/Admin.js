@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Admin.css';
 import AddNewCar from './AddNewCar/AddNewCar';
 import AddNewPart from './AddNewPart/AddNewPart';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../../redux/ducks/reducer';
 
@@ -16,10 +17,12 @@ class Admin extends Component {
     };
   }
 
-  logout = () => {
+  logout() {
     axios.post('/user/logout')
       .then(response => {
+        console.log('you are out');
         this.props.login(null)
+        this.props.history.push('/login');
         console.log('you are logged out')
       })
       .catch(error => {
@@ -29,25 +32,31 @@ class Admin extends Component {
 
   componentWillMount() {
     console.log('this.props -> ', this.props);
-    axios.get('/user/data').then(response => {
+    axios.get('/user/data')
+      .then(response => {
+        console.log(response.data);
       if (response.data.user) {
-        // this.props.login(response.data.user);
+        this.props.login(response.data.user);
       }
-      axios.all([
-        axios.get(`/requests/all`),
-        axios.get(`/cars/all`),
-        axios.get(`/parts/all`)
-      ]).then(axios.spread( (requests, cars, parts) => {
-        this.setState({
-          requests: requests.data,
-          cars: cars.data,
-          parts: parts.data
-        })
-        // console.log('requests ', this.state.requests);
-        // console.log('cars ', this.state.cars);
-        // console.log('parts ', this.state.parts);
-      })).catch(err => console.log(err));
-    }).catch(error => console.log(error))
+      })
+      .catch(error => console.log(error))
+  }
+
+  componentDidMount() {
+    axios.all([
+      axios.get(`/requests/all`),
+      axios.get(`/cars/all`),
+      axios.get(`/parts/all`)
+    ]).then(axios.spread( (requests, cars, parts) => {
+      this.setState({
+        requests: requests.data,
+        cars: cars.data,
+        parts: parts.data
+      })
+      // console.log('requests ', this.state.requests);
+      // console.log('cars ', this.state.cars);
+      // console.log('parts ', this.state.parts);
+    })).catch(err => console.log(err));
   }
 
   handleDelete(i) {
@@ -74,6 +83,7 @@ class Admin extends Component {
 
   render() {
     const { user } = this.props;
+    console.log(user);
 
     const listOfRequests = this.state.requests.map( request => (
       <div className="admin-requests-container" key={request._id}>
@@ -113,16 +123,19 @@ class Admin extends Component {
 
     return (
       <div className="admin-main-container">
-        <button onClick={ this.logout}>Log out</button>
-        <h1>Admin</h1>
-        <h2>Requests</h2>
-        { listOfRequests }
-        <h2>Cars</h2>
-        { listOfCars }
-        <AddNewCar />
-        <h2>Parts</h2>
-        { listOfParts }
-        <AddNewPart />
+        {user && <div>
+          <button onClick={ this.logout}>Log out</button>
+          <h1>Admin</h1>
+          <h2>Requests</h2>
+          { listOfRequests }
+          <h2>Cars</h2>
+          { listOfCars }
+          <AddNewCar />
+          <h2>Parts</h2>
+          { listOfParts }
+          <AddNewPart />
+        </div>}
+        {!user && <div className="you-must-log-in-div"><p>You must log in! <Link to="/login">Log in</Link></p></div>}
       </div>
     );
   }
