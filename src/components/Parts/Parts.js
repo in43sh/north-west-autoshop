@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import aws from '../images/aws.png';
-
+import Navbar from '../Navbar/Navbar'
 import './Parts.css';
 
 export default class Parts extends Component {
@@ -25,7 +25,8 @@ export default class Parts extends Component {
   render() {
     const listOfParts = this.state.parts.map((part, index) => {
       return (
-
+        <div>
+        < Navbar />
         <div id="box" key={index}>
           <div className="container" id="part">
               <div className="row">
@@ -44,6 +45,7 @@ export default class Parts extends Component {
                   </div>
               </div>
             </div>
+          </div>
           </div>
       )})
 

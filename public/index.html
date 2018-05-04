@@ -25,6 +25,22 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    
+    
+    
+
+
+
+      <div id="dummy">
+
+        <!-- need this since the navbar above is stays on top of the next component -->
+      </div>
+
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -47,17 +63,19 @@
   <style>
     #root{
       overflow: auto;
-      padding-bottom: 142px;
+      padding-bottom: 50px;
     }
     .footer-dark {
       position: fixed;
       width: 100%;
       bottom:0;
+      height: 50px;
       margin-top: -180px;
-      padding:50px 0;
+      padding:0px 0;
       color:#f0f9ff;
       background-color:#282d32;
     }
+    
 
 .footer-dark h3 {
   margin-top:0;
@@ -143,6 +161,9 @@
   margin-bottom:0;
 }
 
+#dummy{
+  height: 52px;
+}
 
   </style>
   </body>

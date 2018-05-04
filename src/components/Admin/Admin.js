@@ -17,16 +17,18 @@ class Admin extends Component {
     };
   }
 
-  componentWillMount() {
-    console.log('this.props -> ', this.props);
-    axios.get('/user/data')
+  logout() {
+    axios.post('/user/logout')
       .then(response => {
-        console.log(response.data);
-      if (response.data.user) {
-        this.props.login(response.data.user);
-      }
+        console.log('you are out');
+        console.log(this.props.login(null))
+        this.props.login(null)
+        this.props.history.push('/login');
+        console.log('you are logged out')
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   componentDidMount() {

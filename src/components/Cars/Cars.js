@@ -3,7 +3,7 @@ import axios from 'axios';
 import aws from '../images/aws.png';
 import './Cars.css';
 import { Link } from 'react-router-dom';
-
+import Navbar from '../Navbar/Navbar'
 export default class Cars extends Component {
   constructor(props) {
     super(props);
@@ -48,9 +48,12 @@ export default class Cars extends Component {
       )})
 
     return (
-      <div className="parts-main-container" id="main">
-        <h1 id="list_name">List of Cars</h1>
-        { listOfCars }
+      <div>
+        < Navbar />
+        <div className="parts-main-container" id="main">
+          <h1 id="list_name">List of Cars</h1>
+          { listOfCars }
+        </div>
       </div>
     );
   }
