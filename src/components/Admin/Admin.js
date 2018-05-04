@@ -21,6 +21,7 @@ class Admin extends Component {
     axios.post('/user/logout')
       .then(response => {
         console.log('you are out');
+        console.log(this.props.login(null))
         this.props.login(null)
         this.props.history.push('/login');
         console.log('you are logged out')
