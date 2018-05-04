@@ -1,36 +1,45 @@
-var express = require("express");
-var app = express();
-var mongoose = require("mongoose");
-var bcrypt = require("bcryptjs");
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const saltRound = 12;
 
-var User = mongoose.model("User");
+const User = mongoose.model("User");
 module.exports = {
   register: (req, res) => {
     // console.log("++++++++++++++++++++++++++++++++++++")
     console.log('req.body ---->', req.bodyrs)
     // console.log('+++++++++++++++++++')
     const { username, password } = req.body;
-    const user = new User({
-      username: username,
-      password: password
-    });
-    req.session.user = { username };
-    user
-      .save()
-      .then(saved => {
-        console.log("saved!");
-        res.status(200).json({ user: req.session.user });
-      })
-      .catch(err => {
-        console.log("saving failed");
-        console.log(err);
-        res.status(500).json(false);
+    bcrypt.hash(password, saltRound)
+    .then(hashedPassword => {
+      const user = new User({
+        username: username,
+        password: hashedPassword
       });
+      req.session.user = { username };
+      user
+        .save()
+        .then(saved => {
+          console.log("saved!");
+          res.status(200).json({ user: req.session.user });
+        })
+        .catch(err => {
+          console.log("saving failed");
+          console.log(err);
+          res.status(500).json(false);
+        });
+
+
+    })
+    .catch( () => res.status(500).send() )
   },
   login: (req, res) => {
     User.findOne({ username: req.body.username })
-      .then(data => {
-        // console.log(data);
+      .then(response => {
+        console.log('response -> ', response);
+        console.log('response.username -> ', response.username);
+        console.log('response.password -> ', response.password);
         req.session.user = { username: data.username };
         res.status(200).json( req.session.user );
       })
