@@ -31,18 +31,6 @@ class Admin extends Component {
       })
   }
 
-  componentWillMount() {
-    console.log('this.props -> ', this.props);
-    axios.get('/user/data')
-      .then(response => {
-        console.log(response.data);
-      if (response.data.user) {
-        this.props.login(response.data.user);
-      }
-      })
-      .catch(error => console.log(error))
-  }
-
   componentDidMount() {
     axios.all([
       axios.get(`/requests/all`),
@@ -58,6 +46,20 @@ class Admin extends Component {
       // console.log('cars ', this.state.cars);
       // console.log('parts ', this.state.parts);
     })).catch(err => console.log(err));
+  }
+
+    logout() {
+    axios.post('/user/logout')
+      .then(response => {
+        console.log('you are out');
+        console.log(response.data);
+        this.props.login(response.data)
+        this.props.history.push('/login');
+        console.log('you are logged out')
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   handleDelete(i) {
@@ -125,7 +127,7 @@ class Admin extends Component {
     return (
       <div className="admin-main-container">
         {user && <div>
-          <button onClick={ this.logout}>Log out</button>
+          <button onClick={ this.logout }>Log out</button>
           <h1>Admin</h1>
           <h2>Requests</h2>
           { listOfRequests }
