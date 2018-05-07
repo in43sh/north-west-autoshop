@@ -49,7 +49,7 @@ export default class Contact extends Component {
       // 
 
   
-<div id="contact">
+<div id="_contact">
      <div className="section-content">
        <h1 className="section-header">Get in <span className="content-header wow fadeIn " data-wow-delay="0.2s" data-wow-duration="2s"> Touch with us</span></h1>
        <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h3>
@@ -59,17 +59,17 @@ export default class Contact extends Component {
        <form className="contact-form" onSubmit={(event) => this.handleSubmit(event)}>
          <div className="col-md-6 form-line">
              <div className="form-group">
-               <label for="exampleInputUsername">Your name</label>
+               <label htmlFor="exampleInputUsername">Your name</label>
                <input type="text" className="form-control" id="" placeholder=" Enter Name" onChange={(event) => this.handleChange("name", event)}></input>
              </div>
              <div className="form-group">
-               <label for="telephone">Mobile No.</label>
+               <label htmlFor="telephone">Mobile No.</label>
                <input type="tel" className="form-control" id="telephone" placeholder=" Enter 10-digit mobile no." onChange={(event) => this.handleChange("phone", event)}></input>
              </div>
            </div>
            <div className="col-md-6">
              <div className="form-group">
-               <label for ="description"> Message</label>
+               <label htmlFor ="description"> Message</label>
                 <textarea  className="form-control" id="description" placeholder="Enter Your Message" onChange={(event) => this.handleChange("message", event)}></textarea>
              </div>
              <div>

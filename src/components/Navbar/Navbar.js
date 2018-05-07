@@ -11,7 +11,7 @@ export default class Navbar extends Component {
             <div className="container">
             <input type="checkbox" id="navbar-toggle-cbox"></input>
                     <div className="navbar-header">
-                        <label for="navbar-toggle-cbox" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <label htmlFor="navbar-toggle-cbox" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span className="sr-only">Toggle navigation</span>
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>

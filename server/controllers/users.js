@@ -40,7 +40,7 @@ module.exports = {
         console.log('response -> ', response);
         console.log('response.username -> ', response.username);
         console.log('response.password -> ', response.password);
-        req.session.user = { username: data.username };
+        req.session.user = { username: response.username };
         res.status(200).json( req.session.user );
       })
       .catch(err => {

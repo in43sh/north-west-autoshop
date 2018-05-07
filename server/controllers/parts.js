@@ -47,8 +47,8 @@ module.exports = {
   },
   delete: function(req, res){
     console.log('req.body ---->', req.body);
-    console.log('req.body.id ---->', req.body.i);
-    Part.remove({_id: req.body.i})
+    console.log('req.body.id ---->', req.body.id);
+    Part.remove({_id: req.body.id})
       .then(data=>{
         // console.log(req.body);
         res.status(200).json(true);
@@ -58,19 +58,25 @@ module.exports = {
       })
   },
   edit: function(req, res){
-    Part.findByIdAndUpdate({ _id: req.body.id }, {
+    Part.findByIdAndUpdate({ _id: req.body.temp_id }, {
+                title: req.body.title,
                 brand: req.body.brand,
                 model: req.body.model,
                 price: req.body.price,
                 condition: req.body.condition,
                 year: req.body.year,
                 description: req.body.description,
-                photos: req.body.photos
-    }, function(data, err){
-      if(data){
-        res.status(200).json(true)
-      }else{
+                // photos: req.body.photos
+    }, function(err, data){
+      if(err){
+        console.log("can't delete")
+        console.log(err);
         res.json(false)
+        
+      }else{
+        console.log("the part was deleted")
+        console.log(data);
+        res.status(200).json(true)
       }
     })
       
