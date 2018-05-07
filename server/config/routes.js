@@ -77,12 +77,12 @@ module.exports = function(app) {
 	})
 
 	// Users functions
-	app.post('/user/register', (req, res, next)=>{
+	app.post('/register', (req, res, next)=>{
 		console.log('routes.js: registration completed')
 		console.log('----------------------------------')
 		user.register(req, res)
 	});
-	app.post('/user/login', (req, res, next)=>{
+	app.post('/login', (req, res, next)=>{
 		console.log('routes.js: you are logged in')
 		console.log('----------------------------------')
 		user.login(req, res)

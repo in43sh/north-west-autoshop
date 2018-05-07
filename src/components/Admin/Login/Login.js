@@ -36,7 +36,7 @@ class Login extends Component {
   login = () => {
     const username = this.state.userInput
     const password = this.state.passInput
-    axios.post(`/user/login`, {
+    axios.post('/login', {
       username,
       password
     }).then(response => {

@@ -17,21 +17,23 @@ class Admin extends Component {
     };
   }
 
-  logout() {
-    axios.post('/user/logout')
-      .then(response => {
-        console.log('you are out');
-        console.log(this.props.login(null))
-        this.props.login(null)
-        this.props.history.push('/login');
-        console.log('you are logged out')
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  componentDidMount() {
+    axios.get('/user/data')
+    .then(response => {
+      console.log(response);
+      if (response.data.user) {
+        this.props.login(response.data.user);
+      }
+    })
+    .catch(error => console.log(error))
+
+      // if(this.props.user.username == null){
+      //   this.props.history.push('/login');
+      // }
+    
   }
 
-  componentDidMount() {
+  componentWillMount() {
     axios.all([
       axios.get(`/requests/all`),
       axios.get(`/cars/all`),
