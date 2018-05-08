@@ -11,7 +11,7 @@ module.exports = {
     Request.find({})
               .then(data => {
                 res.json(data);
-                // console.log(data);
+                
               })
               .catch(err => {
                 console.log(err);
@@ -19,10 +19,6 @@ module.exports = {
               
     },
     new: function(req, res) {
-
-        // console.log("++++++++++++++++++++++++++++++++++++")
-        // console.log(req.body)
-        // console.log('+++++++++++++++++++')
         var request = new Request({
                 name: req.body.name,
                 message: req.body.message,
@@ -41,7 +37,7 @@ module.exports = {
             
   },
   delete: function(req, res){
-    Request.remove({_id: req.body.id})
+    Request.remove({_id: req.body.i})
       .then(data=>{
         res.json(true);
       })

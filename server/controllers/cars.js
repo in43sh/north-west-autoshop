@@ -63,26 +63,27 @@ module.exports = {
         res.status(500).json(false);
       });
   },
-  edit: function(req, res) {
-    Car.findByIdAndUpdate(
-      { _id: req.body.id },
-      {
-        brand: req.body.brand,
-        model: req.body.model,
-        price: req.body.price,
-        color: req.body.color,
-        year: req.body.year,
-        mileage: req.body.mileage,
-        description: req.body.description,
-        photos: req.body.photos
-      },
-      function(data, err) {
-        if (data) {
-          res.status(200).json(true);
-        } else {
-          res.status(500).json(false);
-        }
+  edit: function(req, res){
+    console.log(req.body);
+    Car.findByIdAndUpdate({ _id: req.body.temp_id }, {
+                brand: req.body.brand,
+                model: req.body.model,
+                price: req.body.price,
+                condition: req.body.condition,
+                year: req.body.year,
+                description: req.body.description,
+                mileage: req.body.mileage
+                // photos: req.body.photos
+    }, function(err, data){
+      if(err){
+        console.log("can't edit")
+        console.log(err);
+        res.json(false)
+      }else{
+        console.log("the car was edited")
+        console.log(data);
+        res.status(200).json(true)
       }
-    );
+    }) 
   }
 };

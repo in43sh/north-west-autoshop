@@ -72,14 +72,12 @@ module.exports = {
         console.log("can't delete")
         console.log(err);
         res.json(false)
-        
       }else{
         console.log("the part was deleted")
         console.log(data);
         res.status(200).json(true)
       }
-    })
-      
+    }) 
   }
 
 }

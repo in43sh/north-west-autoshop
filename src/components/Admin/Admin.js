@@ -21,7 +21,8 @@ class Admin extends Component {
       price: "",
       condition: "",
       year: "",
-      description: ""
+      description: "",
+      mileage: "",
     };
   }
 
@@ -67,24 +68,18 @@ class Admin extends Component {
     })).catch(err => console.log(err));
   }
 
-  handleDelete(i) {
-    axios.post('/parts/delete', { i })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => console.log(error));
-  }
-  handleCarDelete(i) {
-    axios.post('/cars/delete', { i })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => console.log(error));
-  }
   handleRequestDelete(i) {
     axios.post('/requests/delete', { i })
       .then(res => {
         console.log(res);
+        if(res.data){
+          axios.get('/requests/all')
+          .then(res => {
+            console.log(res);
+            this.setState({ requests: res.data })
+          })
+          .catch(error => console.log(error));
+        }
       })
       .catch(error => console.log(error));
   }
@@ -93,20 +88,77 @@ class Admin extends Component {
     console.log(event.target.value)
     this.setState({ [property]: event.target.value });
   }
+  clearState(){
+    this.setState({temp_id: "",brand: "",title: "",model: "",year: "",condition: "",price: "",description: "", mileage: ""})
+  }
+  // Cars functions
+  edit_car(car){
+    if(this.state.temp_id === car._id){
+      this.clearState();
+    }else{
+      this.setState({
+        temp_id: car._id,
+        brand: car.brand,
+        model: car.model,
+        year: car.year,
+        condition: car.condition,
+        price: car.price,
+        description: car.description,
+        mileage: car.mileage
+      })
+    }
+    
+  }
+  edit_car_submit(event){
+    event.preventDefault();
+    let {
+      temp_id, brand, model, price, condition, year, description, mileage
+    } = this.state;
+    axios
+    .post("/cars/edit", {temp_id, brand, model, price, condition, year, description, mileage
+    })
+    .then(response => {
+      console.log(response);
+      if(response.data){
+        console.log("the car was updated");
+      }else{
+        console.log("can't update this car")
+      }
+    })
+    .catch(error => console.log("BLYAAAD'",error));
+    this.edit_car_cancel();
+  }
+
+  edit_car_cancel(){
+    this.clearState();
+  }
+  update_list_of_cars(){
+    axios.get('/cars/all')
+            .then(res => {
+              this.setState({ cars: res.data })
+            })
+            .catch(error => console.log(error));
+  }
+  handleCarDelete(i) {
+    var id={
+      id:i
+    }
+    axios.post('/cars/delete', id)
+      .then(res => {
+        if(res.data){
+          this.update_list_of_cars();
+        }else{
+          console.log("can't delete this car")
+        }
+      })
+      .catch(error => console.log(error));
+  }
+  // end of cars functions
 
   // Parts functions
   edit_part(part){
     if(this.state.temp_id === part._id){
-      this.setState({
-        temp_id: "",
-        brand: "",
-        title: "",
-        model: "",
-        year: "",
-        condition: "",
-        price: "",
-        description: ""
-      })
+      this.clearState();
     }else{
       this.setState({
         temp_id: part._id,
@@ -124,25 +176,10 @@ class Admin extends Component {
   edit_part_submit(event){
     event.preventDefault();
     let {
-      temp_id,
-      title,
-      brand,
-      model,
-      price,
-      condition,
-      year,
-      description
+      temp_id,title, brand,model,price,condition,year,description
     } = this.state;
     axios
-    .post("/parts/edit", {
-      temp_id,
-      title,
-      brand,
-      model,
-      price,
-      condition,
-      year,
-      description
+    .post("/parts/edit", {temp_id,title, brand,model,price,condition,year,description
     })
     .then(response => {
       console.log(response);
@@ -154,21 +191,12 @@ class Admin extends Component {
     })
     .catch(error => console.log("BLYAAAD'",error));
     this.edit_part_cancel();
-    
-    
   }
+
   edit_part_cancel(){
-    this.setState({
-        temp_id: "",
-        brand: "",
-        title: "",
-        model: "",
-        year: "",
-        condition: "",
-        price: "",
-        description: ""
-    })
+    this.clearState();
   }
+
   handlePartDelete(i) {
     var id={
       id:i
@@ -177,6 +205,12 @@ class Admin extends Component {
       .then(res => {
         if(res.data){
           console.log("the part was deleted");
+          axios.get('/parts/all')
+            .then(res => {
+              console.log(res);
+              this.setState({ parts: res.data })
+            })
+      .catch(error => console.log(error));
         }else{
           console.log("can't delete this part")
         }
@@ -197,29 +231,45 @@ class Admin extends Component {
       </div>
     ));
 
-    const listOfCars = this.state.cars.map( car => (
-      <div className="admin-requests-container" key={car._id} >
-        <div>Brand: {car.brand}</div>
-        <div>Model: {car.model}</div>
-        <div>Price: {car.price}</div>
-        <div>Color: {car.color}</div>
-        <div>Year: {car.year}</div>
-        <div>Description: {car.description}</div>
-        <div>Photos: {car.photos}</div>
-        <button className="btn btn-danger" onClick={() => this.handleCarDelete(car._id)}>Delete</button>
+    const listOfCars = this.state.cars.map( (car,index) => (
+      <div className="admin-parts-container container" key={index}>
+          <div className="container part_cont">
+                <div className="col-md-4" >
+                  <div className="panel panel-primary">
+                    <div className="panel-heading">{car.year} {car.brand} {car.model}:</div>
+                      <div className="panel-body">
+                          <div id="switcher">
+                            <label className="switch">
+                                <input type="checkbox" id="part_edit_switcher" checked={this.state.temp_id === car._id} onClick={() => this.edit_car(car)}/>
+                                <span className="slider"></span>
+                            </label>
+                              Edit
+                          </div>
+                        </div>
+                          <form onSubmit={(event) => this.edit_car_submit(event)}>
+                            <label>Brand : </label><input type='text' className='form-control' onChange={event => this.handleChange("brand", event)}  placeholder="Brand" defaultValue={car.brand} disabled={this.state.temp_id !== car._id}/> 
+                            <label>Model : </label><input type='text' className='form-control' onChange={event => this.handleChange("model", event)} placeholder="Model" defaultValue={car.model}  disabled={this.state.temp_id !== car._id}/>
+                            <label>Price : </label><input type='text' className='form-control' onChange={event => this.handleChange("price", event)} placeholder="Price" defaultValue={car.price}  disabled={this.state.temp_id !== car._id}/>
+                            <label>Condition :</label><input type='text' className='form-control' onChange={event => this.handleChange("condition", event)} placeholder="Condition" defaultValue={car.condition}  disabled={this.state.temp_id !== car._id}/> 
+                            <label>Year :</label><input type='text' className='form-control' onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={car.year} disabled={this.state.temp_id !== car._id}/> 
+                            <label>Mileage :</label><input type='text' className='form-control' onChange={event => this.handleChange("mileage", event)} placeholder="Mileage" defaultValue={car.mileage} disabled={this.state.temp_id !== car._id}/> 
+                            <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={car.description} rows="7" disabled={this.state.temp_id !== car._id}/> 
+                            <button className="btn btn-danger" onClick={() => this.handleCarDelete(car._id)} disabled={this.state.temp_id !== car._id}>Delete</button>
+                            <input type="submit" id="submit" name="submit" className="btn btn-primary pull-right" disabled={this.state.temp_id !== car._id}/>
+                         </form>
+                      </div>
+                  </div>
+            </div>
       </div>
     ));
 
     const listOfParts = this.state.parts.map((part, index) => (
       <div className="admin-parts-container container" key={index}>
-         
           <div className="container part_cont">
-              <div>
                 <div className="col-md-4" >
                   <div className="panel panel-primary">
                     <div className="panel-heading">{part.title} :</div>
                       <div className="panel-body">
-                        <div >
                           <div id="switcher">
                             <label className="switch">
                                 <input type="checkbox" id="part_edit_switcher" checked={this.state.temp_id === part._id} onClick={() => this.edit_part(part)}/>
@@ -228,8 +278,6 @@ class Admin extends Component {
                               Edit
                           </div>
                         </div>
-                        
-                        
                           <form onSubmit={(event) => this.edit_part_submit(event)}>
                             <label>Title</label><input type='text' className='form-control' onChange={event => this.handleChange("title", event)}  defaultValue={part.title} placeholder="Title" required disabled={this.state.temp_id !== part._id} />
                             <label>Brand : </label><input type='text' className='form-control' onChange={event => this.handleChange("brand", event)}  placeholder="Brand" defaultValue={part.brand} disabled={this.state.temp_id !== part._id}/> 
@@ -238,23 +286,12 @@ class Admin extends Component {
                             <label>Condition :</label><input type='text' className='form-control' onChange={event => this.handleChange("condition", event)} placeholder="Condition" defaultValue={part.condition}  disabled={this.state.temp_id !== part._id}/> 
                             <label>Year :</label><input type='text' className='form-control' onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={part.year} disabled={this.state.temp_id !== part._id}/> 
                             <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={part.description} rows="7" disabled={this.state.temp_id !== part._id}/> 
-                            
-                                <button className="btn btn-danger" onClick={() => this.handlePartDelete(part._id)} disabled={this.state.temp_id !== part._id}>Delete</button>
-                                <input type="submit" id="submit" name="submit" className="btn btn-primary pull-right" disabled={this.state.temp_id !== part._id}/>
-                               
-                              
-                          </form>
-                        
-                        
+                            <button className="btn btn-danger" onClick={() => this.handlePartDelete(part._id)} disabled={this.state.temp_id !== part._id}>Delete</button>
+                            <input type="submit" id="submit" name="submit" className="btn btn-primary pull-right" disabled={this.state.temp_id !== part._id}/>
+                         </form>
                       </div>
-                      
                   </div>
-                </div>
-              </div>
             </div>
-        
-        
-        
       </div>
     ));
 
@@ -266,7 +303,9 @@ class Admin extends Component {
           <h2>Requests</h2>
           { listOfRequests }
           <h2>Cars</h2>
-          { listOfCars }
+          <div id="list_of_parts">
+            { listOfCars }
+          </div>
           <AddNewCar />
           <h2>Parts</h2>
           <div id="list_of_parts">

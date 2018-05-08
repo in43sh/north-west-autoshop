@@ -32,7 +32,7 @@ export default class OneCar extends Component {
       <div>
         < Navbar />
           <div id="main">
-          <div id="box">
+          <div id="oneCar">
           
             <div className="container" id="car">
               <div className="row">

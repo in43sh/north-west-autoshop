@@ -24,36 +24,58 @@ export default class Cars extends Component {
   render() {
     const listOfCars = this.state.cars.map((car, index) => {
       return (
-        <Link to={`/car/${ car._id }`} key={index}>
-          <div id="box">
-            <div className="container" id="car">
-              <div className="row">
-                <div className="col-md-12" id="top" >
-                  <h1 id="title">{car.year} {car.brand} {car.model}</h1>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-4"><img src={aws} alt="part" id="photo" /></div>
-                <div className="col-md-4">
-                  <p id="model">Mileage: {car.mileage} Color: {car.color}</p>
-                  <p id="condition">{car.description}</p>
-                </div>
-                <div className="col-md-4">
-                  <p id="price">${car.price}</p>
-                </div>
-              </div>
+        // <Link to={`/car/${ car._id }`} key={index}>
+        //   <div id="box">
+        //     <div className="container" id="car">
+        //       <div className="row">
+        //         <div className="col-md-12" id="top" >
+        //           <h1 id="title">{car.year} {car.brand} {car.model}</h1>
+        //         </div>
+        //       </div>
+        //       <div className="row">
+        //         <div className="col-md-4"><img src={aws} alt="part" id="photo" /></div>
+        //         <div className="col-md-4">
+        //           <p id="model">Mileage: {car.mileage} Color: {car.color}</p>
+        //           <p id="condition">{car.description}</p>
+        //         </div>
+        //         <div className="col-md-4">
+        //           <p id="price">${car.price}</p>
+        //         </div>
+        //       </div>
+        //     </div>
+        //   </div>
+        // </Link>
+        
+        <div class="col-md-3 car-cont" key={index}>
+          <figure class="card card-product">
+            <div class="img-wrap"> 
+              <img src={aws} alt="part" id="photo" />
+              <Link to={`/car/${ car._id }`}><i class="fa fa-search-plus"></i> Quick view</Link>
             </div>
-          </div>
-        </Link>
+            <figcaption class="info-wrap">
+              <h6 class="title text-dots"><a href="#">{car.year} {car.brand} {car.model}</a></h6>
+              <div class="action-wrap">
+                <div class="price-wrap h5">
+                  <span> Mileage: {car.mileage}</span>
+                  <span class="price-new">${car.price}</span>
+                </div> 
+              </div> 
+            </figcaption>
+          </figure> 
+        </div> 
+        
+
       )})
 
     return (
-      <div>
+      <div id="body_list_cars">
         < Navbar />
-        <div className="parts-main-container" id="main">
-          <h1 id="list_name">List of Cars</h1>
-          { listOfCars }
-        </div>
+          <div className="parts-main-container">
+            <h1>List of Cars</h1>
+              <div id="main2">
+                { listOfCars }
+              </div>
+          </div>
       </div>
     );
   }

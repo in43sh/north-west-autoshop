@@ -1,8 +1,5 @@
 #main {
-    background-image:url(../../images/repair.jpg);
-    background-size:cover;
-    background-attachment: fixed;
-    height: 100vh;
+    
   }
   
   .parts-main-container {
@@ -27,9 +24,10 @@
       color: white;
     }
     
-    #box {
+    #oneCar {
       margin:5px 50px;
-      
+      height: 90vh;
+      margin-bottom: -20px;
     }
     
     #top {

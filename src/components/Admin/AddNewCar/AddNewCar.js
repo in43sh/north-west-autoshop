@@ -42,6 +42,7 @@ class AddNewCar extends Component {
         console.log(response);
       })
       .catch(error => console.log(error));
+      console.log(this.state)
   }
 
   render() {
