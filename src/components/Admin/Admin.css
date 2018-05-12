@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
 }
 
 .admin-requests-container {
@@ -11,10 +12,7 @@
 }
 .admin-parts-container.container {
   /* display: flex; */
-  width: 50vh;
-}
-.part_cont{
-  width: 50vh;
+  /* width: 50vh; */
 }
 .red{
   color:red;
@@ -86,9 +84,17 @@ input:checked + .slider {
   box-shadow:0 0 0 2px limeGreen,0 0 2px limeGreen;
 }
 #list_of_parts{
-  display: flex;
+  display: inline-box;
+  flex-direction: column;
+  background-color: black;
+  width: 100%;
 }
-
+.part_cont{
+  max-width: 350px;
+}
+.col-md-4{
+  width: 100%;
+}
 
 
 
