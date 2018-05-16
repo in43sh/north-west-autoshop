@@ -24,27 +24,30 @@ export default class Cars extends Component {
   render() {
     const listOfCars = this.state.cars.map((car, index) => {
       return (
-        // <Link to={`/car/${ car._id }`} key={index}>
-        //   <div id="box">
-        //     <div className="container" id="car">
-        //       <div className="row">
-        //         <div className="col-md-12" id="top" >
-        //           <h1 id="title">{car.year} {car.brand} {car.model}</h1>
-        //         </div>
-        //       </div>
-        //       <div className="row">
-        //         <div className="col-md-4"><img src={aws} alt="part" id="photo" /></div>
-        //         <div className="col-md-4">
-        //           <p id="model">Mileage: {car.mileage} Color: {car.color}</p>
-        //           <p id="condition">{car.description}</p>
-        //         </div>
-        //         <div className="col-md-4">
-        //           <p id="price">${car.price}</p>
-        //         </div>
-        //       </div>
-        //     </div>
-        //   </div>
-        // </Link>
+        <Link to={`/car/${ car._id }`} key={index}>
+          <div id="box">
+            <div className="container" id="car">
+              <div className="row">
+                <div className="col-md-12" id="top" >
+                  <h1 id="title">{car.year} {car.brand} {car.model}</h1>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-4">
+                  {car.photos.length == 0 && <img src={aws} alt="part" id="photo" className="photos"/>} 
+                  {car.photos.length>0 && <img src={car.photos[0]} alt="part" id="photo" className="photos"/>}
+                </div>
+                <div className="col-md-4">
+                  <p id="model">Mileage: {car.mileage} Color: {car.color}</p>
+                  <p id="condition">{car.description}</p>
+                </div>
+                <div className="col-md-4">
+                  <p id="price">${car.price}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
         
         // <div class="col-md-3 car-cont" key={index}>
         //   <figure class="card card-product">
@@ -65,14 +68,16 @@ export default class Cars extends Component {
         // </div> 
 
 
-        <div class="col-md-3 car-cont" key={index}>
-           <figure class="card card-product">
-              <div class="producttitle"><h3>{car.year} {car.brand} {car.model}</h3></div>
-              <img src={aws} class="img-responsive" />
-              
-              <div class="productprice"><div class="pull-right"><Link to={`/car/${ car._id }`}><button class="btn btn-danger btn-sm" role="button">View</button></Link></div><div class="pricetext">${car.price}</div></div>
-            </figure> 
-        </div>
+        // <div class="col-md-3 car-cont" key={index}>
+        //    <figure class="card card-product">
+        //       <div class="producttitle"><h3>{car.year} {car.brand} {car.model}</h3></div>
+
+        //       {!car.photo && <img src={aws} class="img-responsive" />}
+        //       {car.photo && <img src={car.photo[0]} class="img-responsive" />}
+        //       <div class="productprice"><div class="pull-right"><Link to={`/car/${ car._id }`}><button class="btn btn-danger btn-sm" role="button">View</button></Link></div><div class="pricetext">${car.price}</div></div>
+        //     </figure> 
+        // </div>
+        
         
 
       )})

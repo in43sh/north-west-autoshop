@@ -25,29 +25,28 @@ class Admin extends Component {
       year: "",
       description: "",
       mileage: "",
-      pizda: ""
+      pizda: "",
+      files: []
     };
   }
 
-
-  componentWillMount() {
+  componentDidMount() {
     axios.get('/user/data')
-      .then(response => {
-        console.log(response.data);
-        if (response.data.user) {
-          this.props.login(response.data.user);
-        }
-      })
-      .catch(error => console.log(error))
+    .then(response => {
+      // console.log(response);
+      if (response.data.user) {
+        this.props.login(response.data.user);
+      }
+    })
+    .catch(error => console.log(error))
 
-    console.log("componentWillMount",this.state);
+      // if(this.props.user.username == null){
+      //   this.props.history.push('/login');
+      // }
+    
   }
 
-  componentDidMount() {
-    console.log('this.props -> ', this.props);
-    // this.state.pizda = this.props;
-    
-    console.log(this.state, "+++++++++++++++++++++++++++++");
+  componentWillMount() {
     axios.all([
       axios.get(`/requests/all`),
       axios.get(`/cars/all`),
@@ -69,11 +68,11 @@ class Admin extends Component {
   handleRequestDelete(i) {
     axios.post('/requests/delete', { i })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data) {
           axios.get('/requests/all')
             .then(res => {
-              console.log(res);
+              // console.log(res);
               this.setState({ requests: res.data })
             })
             .catch(error => console.log(error));

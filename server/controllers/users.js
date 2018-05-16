@@ -8,7 +8,7 @@ const User = mongoose.model("User");
 module.exports = {
   register: (req, res) => {
     // console.log("++++++++++++++++++++++++++++++++++++")
-    console.log('req.body ---->', req.bodyrs)
+    console.log('req.body ---->', req.body)
     // console.log('+++++++++++++++++++')
     const { username, password } = req.body;
     bcrypt.hash(password, saltRound)
@@ -35,13 +35,27 @@ module.exports = {
     .catch( () => res.status(500).send() )
   },
   login: (req, res) => {
+    const { username, password } = req.body;
+    console.log(req.body);
     User.findOne({ username: req.body.username })
       .then(response => {
         console.log('response -> ', response);
         console.log('response.username -> ', response.username);
         console.log('response.password -> ', response.password);
-        req.session.user = { username: response.username };
-        res.status(200).json( req.session.user );
+        if (response) {
+          bcrypt.compare(password, response.password)
+            .then( passwordMatch => {
+              if (passwordMatch) {
+                req.session.user = { username: response.username };
+                res.status(200).json( req.session.user );
+              } else {
+                res.status(401).json({ message: 'Something is wrong with password' })
+              }
+            })
+            .catch(error => console.log(error))
+        } else {
+          res.status(401).json({ message: 'Something is wrong with username' })
+        }
       })
       .catch(err => {
         res.status(500).json(false);
@@ -57,7 +71,7 @@ module.exports = {
   },
   all: (req, res) => {
     // console.log("all cars")
-    Car.find({})
+    User.find({})
       .then(data => {
         // console.log(data);
         res.status(200).json(data);

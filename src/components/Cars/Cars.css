@@ -38,6 +38,7 @@
   #car {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 15px;
+    margin-bottom: 10px;
   }
   
   #model {
@@ -67,6 +68,8 @@
   
   @media (max-width: 991px) {
     #top {
+      padding-top: 2px;
+      margin-top: -8px;
       height:38px;
     }
   }
@@ -131,13 +134,16 @@
   #main2{
     margin: 15px auto;
     align-content: center;
-    margin-left: 15%;
   }
   #body_list_cars{
     background-image:url(../images/repair.jpg);
     background-repeat: no-repeat;
 background-size:cover;
   background-attachment: fixed;
+  }
+  .photos{
+    max-width: 300px;
+    max-height: 200px;
   }
 
 

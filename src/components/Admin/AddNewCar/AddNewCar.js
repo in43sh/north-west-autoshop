@@ -3,6 +3,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 // import { urlsend } from "../../../redux/ducks/reducer";
 import "./AddNewCar.css";
+import { getPhotos } from "../../../redux/ducks/reducer"
+
 
 import Uploader from "../../Uploader/Uploader";
 
@@ -16,7 +18,8 @@ class AddNewCar extends Component {
       color: "",
       year: "",
       mileage: "",
-      description: ""
+      description: "",
+      photos: []
     };
   }
 
@@ -28,6 +31,7 @@ class AddNewCar extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let { brand, model, price, color, year, mileage, description } = this.state;
+    let photos = this.props.getPhotos();
     axios
       .post("/cars/new", {
         brand,
@@ -36,13 +40,19 @@ class AddNewCar extends Component {
         color,
         year,
         mileage,
-        description
+        description,
+        photos
       })
       .then(response => {
         console.log(response);
       })
       .catch(error => console.log(error));
-      console.log(this.state)
+        console.log(this.state)
+  }
+  checkState(){
+    console.log("this state",this.state)
+    console.log("this props =>>>", this.props);
+    console.log(this.props.getPhotos())
   }
 
   render() {
@@ -140,14 +150,13 @@ class AddNewCar extends Component {
                 <td>
                   <p className="inputparagraph">Photo: </p>
                 </td>
-                <td>
-                  <Uploader />
-                </td>
               </tr>
               <tr><td><input type="submit" className="btn btn-primary input" /></td></tr>
             </tbody>
           </table>
         </form>
+        <Uploader />
+        <button onClick={() => this.checkState()}>Check state</button>
       </div>
     );
   }
@@ -155,8 +164,8 @@ class AddNewCar extends Component {
 
 const mapStateToProps = state => {
   return {
-    url: state.url
+    url: state.url,
+    getPhotos: getPhotos
   };
 };
-
 export default connect(mapStateToProps, null)(AddNewCar);

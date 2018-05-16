@@ -18,7 +18,7 @@ class Login extends Component {
   componentWillMount() {
     axios.get('/user/data')
       .then(response => {
-        console.log(response);
+        // console.log(response);
         if (response.data.user) {
           this.props.login(response.data.user);
         }
@@ -36,15 +36,15 @@ class Login extends Component {
   login = () => {
     const username = this.state.userInput
     const password = this.state.passInput
-    axios.post(`/user/login`, {
+    axios.post('/login', {
       username,
       password
     }).then(response => {
-      console.log('response ->', response)
-      console.log('response.data.username -> ', response.data.username);
+      // console.log('response ->', response)
+      // console.log('response.data.username -> ', response.data.username);
       this.props.login(response.data.username)
       this.props.history.push('/admin');
-      console.log('you are in')
+      // console.log('you are in')
     }).catch(error => {
       console.log(error);
       console.log(error.response)

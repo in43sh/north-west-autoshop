@@ -26,7 +26,7 @@ export default class Parts extends Component {
     const listOfParts = this.state.parts.map((part, index) => {
       return (
         <div>
-        < Navbar />
+        
         <div id="box" key={index}>
           <div className="container" id="part">
               <div className="row">
@@ -51,9 +51,12 @@ export default class Parts extends Component {
 
 
     return (
+      <div>
+      < Navbar />
       <div className="parts-main-container" id="main">
         <h1 id="list_name">List of parts</h1>
         { listOfParts }
+      </div>
       </div>
     );
   }
