@@ -119,6 +119,22 @@ module.exports = function(app) {
 		res.status(200).send(imageUrl);
 	});
 
+	app.delete('/api/delete/:key', (req, res, next) => {
+		// Parameters for the S3 delete method. The bucket and file name is needed.
+		const params = { 
+			Bucket: process.env.BUCKET, 
+			Key: req.params.key
+		};
+	
+		// Deletes object from S3
+		s3.deleteObject(params, (error, data) => {
+			// If there's an error return the error
+			if (error) return res.json({ error });
+	
+			if(data) return res.json({data})
+		});
+	});
+
 	
 }
 

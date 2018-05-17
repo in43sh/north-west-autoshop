@@ -3,7 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 // import { urlsend } from "../../../redux/ducks/reducer";
 import "./AddNewCar.css";
-import { getPhotos } from "../../../redux/ducks/reducer"
+import { getPhotos, savePhotos } from "../../../redux/ducks/reducer"
 
 
 import Uploader from "../../Uploader/Uploader";
@@ -32,6 +32,9 @@ class AddNewCar extends Component {
     event.preventDefault();
     let { brand, model, price, color, year, mileage, description } = this.state;
     let photos = this.props.getPhotos();
+    if(photos==null){
+      photos = [];
+    }
     axios
       .post("/cars/new", {
         brand,
@@ -45,9 +48,24 @@ class AddNewCar extends Component {
       })
       .then(response => {
         console.log(response);
+        this.props.savePhotos([])
       })
       .catch(error => console.log(error));
         console.log(this.state)
+      
+      console.log(window.location);
+      alert("New car is created!")
+      this.setState({
+        brand: "",
+        model: "",
+        price: "",
+        color: "",
+        year: "",
+        mileage: "",
+        description: "",
+        photos: []
+      })
+      window.location.reload();
   }
   checkState(){
     console.log("this state",this.state)
@@ -77,6 +95,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("brand", event)}
                     className="input"
+                    defaultValue={this.state.brand}
                   />
                 </td>
               </tr>
@@ -88,6 +107,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("model", event)}
                     className="input"
+                    defaultValue={this.state.model}
                   />
                 </td>
               </tr>
@@ -99,6 +119,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("price", event)}
                     className="input"
+                    defaultValue={this.state.price}
                   />
                 </td>
               </tr>
@@ -110,6 +131,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("color", event)}
                     className="input"
+                    defaultValue={this.state.color}
                   />
                 </td>
               </tr>
@@ -121,6 +143,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("year", event)}
                     className="input"
+                    defaultValue={this.state.year}
                   />
                 </td>
               </tr>
@@ -132,6 +155,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("mileage", event)}
                     className="input"
+                    defaultValue={this.state.mileage}
                   />
                 </td>
               </tr>
@@ -143,6 +167,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("description", event)}
                     className="input"
+                    defaultValue={this.state.description}
                   />
                 </td>
               </tr>
@@ -152,6 +177,7 @@ class AddNewCar extends Component {
                 </td>
               </tr>
               <tr><td><input type="submit" className="btn btn-primary input" /></td></tr>
+              
             </tbody>
           </table>
         </form>
@@ -165,7 +191,8 @@ class AddNewCar extends Component {
 const mapStateToProps = state => {
   return {
     url: state.url,
-    getPhotos: getPhotos
+    getPhotos: getPhotos,
+    savePhotos: savePhotos
   };
 };
 export default connect(mapStateToProps, null)(AddNewCar);

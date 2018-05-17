@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { login } from '../../redux/ducks/reducer';
 import aws from "../images/aws.png"
 import Navbar from "./../Navbar/Navbar"
+import Uploader from "./../Uploader/Uploader";
+import {savePhotos, getPhotos} from './../../redux/ducks/reducer'
 
 class Admin extends Component {
   constructor(props) {
@@ -25,7 +27,7 @@ class Admin extends Component {
       year: "",
       description: "",
       mileage: "",
-      pizda: "",
+      photos: [],
       files: []
     };
   }
@@ -39,14 +41,10 @@ class Admin extends Component {
       }
     })
     .catch(error => console.log(error))
-
-      // if(this.props.user.username == null){
-      //   this.props.history.push('/login');
-      // }
-    
   }
 
   componentWillMount() {
+    console.log(window.location);
     axios.all([
       axios.get(`/requests/all`),
       axios.get(`/cars/all`),
@@ -62,7 +60,7 @@ class Admin extends Component {
       // console.log('parts ', this.state.parts);
     })).catch(err => console.log(err));
 
-    console.log("componentDidMount",this.state);
+    // console.log("componentDidMount",this.state);
   }
 
   handleRequestDelete(i) {
@@ -83,11 +81,11 @@ class Admin extends Component {
   handleChange(property, event) {
     event.preventDefault();
     this.setState({ [property]: event.target.value });
-    console.log("handleChange",this.state);
+    // console.log("handleChange",this.state);
   }
   clearState() {
-    this.setState({ temp_id: "", brand: "", title: "", model: "", year: "", condition: "", price: "", description: "", mileage: "" })
-    console.log("clearState",this.state);
+    this.setState({ temp_id: "", brand: "", title: "", model: "", year: "", condition: "", price: "", description: "", mileage: "", photos: [] })
+    // console.log("clearState",this.state);
   }
   // Cars functions
   edit_car(car) {
@@ -102,32 +100,33 @@ class Admin extends Component {
         condition: car.condition,
         price: car.price,
         description: car.description,
-        mileage: car.mileage
+        mileage: car.mileage,
+        photos: car.photos
       })
     }
-    console.log("edit_car",this.state);
+    // console.log("edit_car",this.state);
 
   }
   edit_car_submit(event) {
     event.preventDefault();
     let {
-      temp_id, brand, model, price, condition, year, description, mileage
+      temp_id, brand, model, price, condition, year, description, mileage, photos
     } = this.state;
     axios
       .post("/cars/edit", {
-        temp_id, brand, model, price, condition, year, description, mileage
+        temp_id, brand, model, price, condition, year, description, mileage, photos
       })
       .then(response => {
-        console.log(response);
+        // console.log(response);
         if (response.data) {
-          console.log("the car was updated");
+          // console.log("the car was updated");
         } else {
-          console.log("can't update this car")
+          // console.log("can't update this car")
         }
       })
       .catch(error => console.log("BLYAAAD'", error));
     this.edit_car_cancel();
-    console.log("edit_car_submit",this.state);
+    // console.log("edit_car_submit",this.state);
   }
 
   edit_car_cancel() {
@@ -184,9 +183,9 @@ class Admin extends Component {
         temp_id, title, brand, model, price, condition, year, description
       })
       .then(response => {
-        console.log(response);
+        // console.log(response);
         if (response.data) {
-          console.log("the part was updated");
+          // console.log("the part was updated");
         } else {
           console.log("can't update this part")
         }
@@ -206,7 +205,7 @@ class Admin extends Component {
     axios.post('/parts/delete', id)
       .then(res => {
         if (res.data) {
-          console.log("the part was deleted");
+          // console.log("the part was deleted");
           axios.get('/parts/all')
             .then(res => {
               console.log(res);
@@ -235,6 +234,29 @@ class Admin extends Component {
   }
   displayState(){
     console.log(this.state);
+  }
+  deletePhoto(id, element){
+    console.log(id, element);
+    var tempArr = this.state.photos;
+    for(let i = 0; i< tempArr.length; i++){
+      if(tempArr[i] === element){
+        for(let k = i; k < tempArr.length-1; k++){
+          tempArr[k] = tempArr[k+1]
+        }
+        tempArr.pop();
+        break;
+      }
+    }
+    this.setState({
+      photos: tempArr
+    })
+    console.log(this.state.photos);
+    const url = element.split('/');
+    const fileName = url[url.length-1];
+    axios.delete(`/api/delete/${fileName}`)
+    .then( res => {
+        console.log(element, "is deleted");
+    }).catch(err => console.log(err));
   }
   // end of parts functions
 
@@ -271,6 +293,12 @@ class Admin extends Component {
                 <label>Year :</label><input type='text' className='form-control' onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={car.year} disabled={this.state.temp_id !== car._id} />
                 <label>Mileage :</label><input type='text' className='form-control' onChange={event => this.handleChange("mileage", event)} placeholder="Mileage" defaultValue={car.mileage} disabled={this.state.temp_id !== car._id} />
                 <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={car.description} rows="7" disabled={this.state.temp_id !== car._id} />
+                <ul>  {car.photos && car.photos.length>0 && car.photos.map((e, i) => <li key={i}><img src={e} className="prevImg" />
+                            <button type="button" className="btn btn-danger btn-xs" onClick={() => this.deletePhoto(car._id, e)} disabled={this.state.temp_id !== car._id}>Remove</button>
+                            </li>) }
+                              
+                        </ul>
+                        < Uploader />
                 <button className="btn btn-danger" onClick={() => this.handleCarDelete(car._id)} disabled={this.state.temp_id !== car._id}>Delete</button>
                 <input type="submit" id="submit" name="submit" className="btn btn-primary pull-right" disabled={this.state.temp_id !== car._id} />
               </form>
@@ -302,6 +330,7 @@ class Admin extends Component {
                 <label>Year :</label><input type='text' className='form-control' onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={part.year} disabled={this.state.temp_id !== part._id} />
                 <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={part.description} rows="7" disabled={this.state.temp_id !==part._id} />
                 <button className="btn btn-danger" onClick={() => this.handlePartDelete(part._id)} disabled={this.state.temp_id !== part._id}>Delete</button>
+                
                 <input type="submit" id="submit" name="submit" className="btn btn-primary pull-right" disabled={this.state.temp_id !== part._id} />
               </form>
             </div>
@@ -340,7 +369,9 @@ class Admin extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    getPhotos: getPhotos,
+    savePhotos: savePhotos
   };
 };
 

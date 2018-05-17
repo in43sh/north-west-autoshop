@@ -29,17 +29,13 @@ class Uploader extends Component {
     // the upload http request can go here for an immediate upload after the drop. I'm just using submit button for now.
   }
 
-    upload = (e) => {
-        e.preventDefault();
+    upload = () => {
         var tempArr = [];
         for(let i = 0; i<this.state.files.length; i++){
             superagent
                 .post('/api/upload')
-                .attach('item', this.state.files[i]) // 'painting' has to match with another string in /server/index.js (line 38)
+                .attach('item', this.state.files[i]) 
                 .end((error, response) => {
-                    // this.setState({ url: response.text })
-                    // this.props.urlsend(response.text)
-                    // console.log('response -> ', response.text)
                     tempArr.push(response.text)
                     console.log(tempArr);
                     if (error) console.log(error);
@@ -49,35 +45,53 @@ class Uploader extends Component {
         this.props.savePhotos(tempArr)
     }
 
-  delete = () => {
-    const url = this.state.image.image_url.split('/');
-    const fileName = url[url.length-1];
-    axios.delete(`/api/delete/${fileName}`)
-    .then( res => {
-        console.log(res.data);
-        this.setState({ image: null });
-    }).catch(err => console.log(err));
+  delete = (element) => {
+    //   console.log(element.name);
+      var tempArr = this.state.files;
+       for(let i = 0; i<tempArr.length; i++){
+           if(tempArr[i].name === element.name){
+               for(let k = i; k<tempArr.length-1; k++){
+                   tempArr[k] = tempArr[k+1]
+               }
+               tempArr.pop()
+               break;
+           }
+       }
+       this.setState({
+           files: tempArr
+       })
+    //    console.log(this.state.files);
+    // const url = this.state.image.image_url.split('/');
+    // const fileName = url[url.length-1];
+    // axios.delete(`/api/delete/${fileName}`)
+    // .then( res => {
+    //     console.log(res.data);
+    //     var tempArr = this.state.files;
+    //     for(let i = 0; i<tempArr.length; i++){
+
+    //     }
+    // }).catch(err => console.log(err));
   }
 
   render() {
     return(
             <div>
-                <form onSubmit={this.upload}>
+                <div>
                     <div className="uploader">
                         <Dropzone className="dropzone" onDrop={this.onDrop} multiple={false}>
-                            <button className="btn btn-warning"><i className="fas fa-plus">Select photos</i></button>
+                            <button className="btn btn-warning">+</button>
                         </Dropzone>
                         <h4>Chosen photos</h4>
                         <ul>
-                            {this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} className="prevImg" /></li>) }
+                            {this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} className="prevImg" />
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => this.delete(e)}>Remove</button>
+                            </li>) }
                         </ul>
                     </div>
-                    <div className="submit-btn">
-                        <input className="btn" type="submit"/>
-                    </div>
-                </form>
+                    <button type="button" className="btn btn-primary btn-sm" onClick={() => this.upload()}>Upload (click here first before Submit)</button>
+                    
+                </div>
                 { this.state.image && <img src={this.state.image.image_url} alt="pic"/> }
-                <button className="btn" onClick={this.delete}>Delete</button>
             </div>
         )
     }

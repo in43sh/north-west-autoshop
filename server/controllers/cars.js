@@ -72,7 +72,8 @@ module.exports = {
                 condition: req.body.condition,
                 year: req.body.year,
                 description: req.body.description,
-                mileage: req.body.mileage
+                mileage: req.body.mileage,
+                photos: req.body.photos
                 // photos: req.body.photos
     }, function(err, data){
       if(err){
