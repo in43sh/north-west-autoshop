@@ -5,6 +5,7 @@ import Navbar from "../../Navbar/Navbar";
 import Slider from 'react-slick';
 // import { Link } from 'react-router-dom';
 import "./OneCar.css";
+
 // import aws from "../images/aws.png";
 
 export default class OneCar extends Component {
