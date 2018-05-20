@@ -60,17 +60,6 @@ class Uploader extends Component {
        this.setState({
            files: tempArr
        })
-    //    console.log(this.state.files);
-    // const url = this.state.image.image_url.split('/');
-    // const fileName = url[url.length-1];
-    // axios.delete(`/api/delete/${fileName}`)
-    // .then( res => {
-    //     console.log(res.data);
-    //     var tempArr = this.state.files;
-    //     for(let i = 0; i<tempArr.length; i++){
-
-    //     }
-    // }).catch(err => console.log(err));
   }
 
   render() {

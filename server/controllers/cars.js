@@ -69,7 +69,6 @@ module.exports = {
                 brand: req.body.brand,
                 model: req.body.model,
                 price: req.body.price,
-                condition: req.body.condition,
                 year: req.body.year,
                 description: req.body.description,
                 mileage: req.body.mileage,
