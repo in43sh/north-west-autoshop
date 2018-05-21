@@ -21,7 +21,7 @@ module.exports = {
     Car.findOne({ _id: req.body._id })
       .then(data => {
         // console.log(data);
-        res.status(200).json(data);
+        res.json(data);
       })
       .catch(err => {
         res.status(500).json(false);
@@ -64,16 +64,14 @@ module.exports = {
       });
   },
   edit: function(req, res){
-    console.log(req.body);
+    // console.log(req.body);
     Car.findByIdAndUpdate({ _id: req.body.temp_id }, {
                 brand: req.body.brand,
                 model: req.body.model,
                 price: req.body.price,
                 year: req.body.year,
                 description: req.body.description,
-                mileage: req.body.mileage,
-                photos: req.body.photos
-                // photos: req.body.photos
+                mileage: req.body.mileage
     }, function(err, data){
       if(err){
         console.log("can't edit")
@@ -83,6 +81,21 @@ module.exports = {
         console.log("the car was edited")
         console.log(data);
         res.status(200).json(true)
+      }
+    }) 
+  },
+  editPhoto: function(params){
+    console.log(params);
+    Car.findByIdAndUpdate({ _id: params.id }, {
+                $push: {photos: params.imageUrl}
+    }, function(err, data){
+      if(err){
+        console.log("can't edit")
+        console.log(err);
+        res.json(false)
+      }else{
+        console.log("Photos are uploaded!")
+        console.log(data);
       }
     }) 
   }

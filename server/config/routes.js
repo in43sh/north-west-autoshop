@@ -46,6 +46,10 @@ module.exports = function(app) {
 	app.post("/cars/edit", (req, res, next) => {
 		car.edit(req, res)
 	});
+	app.post("/cars/edit/photo", (req, res, next) => {
+		car.editPhoto(req, res)
+	});
+
 
 	// Parts functions
 	app.get("/parts/all", (req, res, next)=>{
@@ -100,7 +104,8 @@ module.exports = function(app) {
 		user.all(req, res)
 	});
 
-	app.post('/api/upload', upload.single('item'), (req, res) => {
+	app.post('/api/upload/:id', upload.single('item'), (req, res) => {
+		console.log(req.body);
 		var params = {
 			Bucket: process.env.BUCKET,
 			Key: req.file.originalname, 
@@ -116,6 +121,13 @@ module.exports = function(app) {
 			if (err) return res.status(400).send(err);
 		})
 		var imageUrl = 'https://s3.amazonaws.com/' + params.Bucket + '/'+ params.Key
+		var send = {
+			id: req.params.id,
+			imageUrl: imageUrl
+		}
+		console.log("+++++++++++++++++++++++++");
+		console.log(req.params);
+		car.editPhoto(send)
 		res.status(200).send(imageUrl);
 	});
 

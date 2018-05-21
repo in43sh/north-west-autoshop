@@ -8,7 +8,7 @@ const User = mongoose.model("User");
 module.exports = {
   register: (req, res) => {
     // console.log("++++++++++++++++++++++++++++++++++++")
-    console.log('req.body ---->', req.body)
+    // console.log('req.body ---->', req.body)
     // console.log('+++++++++++++++++++')
     const { username, password } = req.body;
     bcrypt.hash(password, saltRound)
@@ -36,12 +36,12 @@ module.exports = {
   },
   login: (req, res) => {
     const { username, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     User.findOne({ username: req.body.username })
       .then(response => {
-        console.log('response -> ', response);
-        console.log('response.username -> ', response.username);
-        console.log('response.password -> ', response.password);
+        // console.log('response -> ', response);
+        // console.log('response.username -> ', response.username);
+        // console.log('response.password -> ', response.password);
         if (response) {
           bcrypt.compare(password, response.password)
             .then( passwordMatch => {
@@ -66,7 +66,7 @@ module.exports = {
     res.status(200).send();
   },
   getUserData: (req, res, next) => {
-    console.log('req.session ->', req.session)
+    // console.log('req.session ->', req.session)
     res.json({ user: req.session.user })
   },
   all: (req, res) => {

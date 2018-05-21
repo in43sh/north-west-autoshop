@@ -110,14 +110,16 @@ class Admin extends Component {
     // console.log("edit_car",this.state);
 
   }
-  edit_car_submit(event) {
+  edit_car_submit(event, index) {
     event.preventDefault();
+    this.upload(this.state.temp_id)
     let {
-      temp_id, brand, model, price,  year, description, mileage, photos
+      temp_id, brand, model, price,  year, description, mileage
     } = this.state;
+    
     axios
       .post("/cars/edit", {
-        temp_id, brand, model, price, year, description, mileage, photos
+        temp_id, brand, model, price, year, description, mileage
       })
       .then(response => {
         // console.log(response);
@@ -132,8 +134,9 @@ class Admin extends Component {
     // console.log("edit_car_submit",this.state);
   }
   // LOCAL UPLOADER FOR CARS ---------------------------
-  onDrop = (photo) => {
-    this.edit_car(this.state.car_container); //since onDrop() function clears form, thereby the current this.state values, I found a way to keep track of the current car._id
+  onDrop(photo){
+    console.log("PHOTO!", photo);
+    //this.edit_car(this.state.car_container); //since onDrop() function clears form, thereby the current this.state values, I found a way to keep track of the current car._id
     var tempArr = this.state.files;
     tempArr.push(photo[0]);
     this.setState({
@@ -142,22 +145,24 @@ class Admin extends Component {
 
   }
 
-    upload(){
-        var tempArr = [];
+    upload(id){
+        var counter = 0;
+        var newPhotos = [];
+        console.log(id);
         for(let i = 0; i<this.state.files.length; i++){
             superagent
-                .post('/api/upload')
+                .post(`/api/upload/${id}`)
                 .attach('item', this.state.files[i]) 
                 .end((error, response) => {
-                    tempArr.push(response.text)
-                    console.log(tempArr);
                     if (error) console.log(error);
+                    counter++;
+                    if(counter===this.state.files.length){
+                      console.log("DAAAAAAAAA");
+                      this.refreshCarById(id)
+                    }
                     console.log('File Uploaded Succesfully'); // Just taking all pics from this.state.files and send them on the back-end and then to s3
-                })                                            // and getting back urls to those pics
+                })                                        // and getting back urls to those pics
         }
-        this.setState({
-          photos: tempArr                                     // Storing those urls and later on it'll go for a specific car in this.edit_car_submit()
-        })
     }
 
   delete = (element) => {
@@ -183,6 +188,27 @@ class Admin extends Component {
   // ---------------------------------------------------
   edit_car_cancel() {
     this.clearState();  // canceling editor and clearing this.state
+  }
+  refreshCarById(id){
+    var id= {
+      _id:id
+    }
+    console.log("looking for a car", id);
+    var tempArr = this.state.cars;
+    axios.post('/cars/find/', id)
+      .then(res=>{
+        for(let i = 0; i<tempArr.length; i++){
+          if(tempArr[i]._id === id._id){
+            console.log(i, id._id);
+            tempArr[i] = res.data;
+            console.log(tempArr[i]);
+            this.setState({
+              cars: tempArr
+            })
+            break;
+          }
+        }
+      })
   }
   update_list_of_cars() {
     axios.get('/cars/all')
@@ -346,7 +372,7 @@ class Admin extends Component {
                 </label>
                 Edit
                            </div>
-              <form onSubmit={(event) => this.edit_car_submit(event)}>
+              <form onSubmit={(event) => this.edit_car_submit(event, index)}>
                 <label>Brand : </label><input type='text' className='form-control' onChange={event => this.handleChange("brand", event)} placeholder="Brand" defaultValue={car.brand} disabled={this.state.temp_id !== car._id} />
                 <label>Model : </label><input type='text' className='form-control' onChange={event => this.handleChange("model", event)} placeholder="Model" defaultValue={car.model} disabled={this.state.temp_id !== car._id} />
                 <label>Price : </label><input type='text' className='form-control' onChange={event => this.handleChange("price", event)} placeholder="Price" defaultValue={car.price} disabled={this.state.temp_id !== car._id} />
@@ -362,18 +388,16 @@ class Admin extends Component {
                 <div>
                     <div className="uploader">
                     {/* this.onDrop */}
-                        <Dropzone className="dropzone" onClick={() => this.store_car(car)} onDrop={ this.onDrop } multiple={true} disabled={this.state.temp_id !== car._id}> 
-                            <button className="btn btn-warning" disabled={this.state.temp_id !== car._id} onClick={() => this.edit_car(car._id)}>+</button>
+                        <Dropzone className="dropzone" onClick={(event) => event.preventDefault()} onDrop={(photo)=> this.onDrop(photo) } multiple={true} disabled={this.state.temp_id !== car._id}> 
+                            <button className="btn btn-warning" disabled={this.state.temp_id !== car._id} onClick={(event) => event.preventDefault()} >+</button>
                         </Dropzone>
                         <h4>Chosen photos</h4>
                         <ul>
-                            {this.temp_id === car._id && this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} className="prevImg" />
+                            {this.state.temp_id === car._id && this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} className="prevImg" />
                             <button type="button" className="btn btn-danger btn-sm" onClick={() => this.delete(e)} disabled={this.state.temp_id !== car._id}>Remove</button>
                             </li>) }
                         </ul>
                     </div>
-                    <button type="button" className="btn btn-primary btn-sm" onClick={() => this.upload()} disabled={this.state.temp_id !== car._id}>Upload (click here first before Submit)</button>
-                    
                 </div>
                 { this.state.image && <img src={this.state.image.image_url} alt="pic"/> }
             </div>        
