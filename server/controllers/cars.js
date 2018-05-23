@@ -46,7 +46,7 @@ module.exports = {
       .save()
       .then(saved => {
         console.log("saved!");
-        res.status(200).json(true);
+        res.json(saved);
       })
       .catch(err => {
         console.log("saving failed");
@@ -71,7 +71,7 @@ module.exports = {
                 price: req.body.price,
                 year: req.body.year,
                 description: req.body.description,
-                mileage: req.body.mileage
+                mileage: req.body.mileage,
     }, function(err, data){
       if(err){
         console.log("can't edit")

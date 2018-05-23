@@ -3,10 +3,9 @@ import axios from "axios";
 import { connect } from "react-redux";
 // import { urlsend } from "../../../redux/ducks/reducer";
 import "./AddNewCar.css";
+import Dropzone from 'react-dropzone';
+import superagent  from 'superagent';
 import { getPhotos, savePhotos } from "../../../redux/ducks/reducer"
-
-
-import Uploader from "../../Uploader/Uploader";
 
 class AddNewCar extends Component {
   constructor(props) {
@@ -19,7 +18,7 @@ class AddNewCar extends Component {
       year: "",
       mileage: "",
       description: "",
-      photos: []
+      files: []
     };
   }
 
@@ -31,10 +30,6 @@ class AddNewCar extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let { brand, model, price, color, year, mileage, description } = this.state;
-    let photos = this.props.getPhotos();
-    if(photos==null){
-      photos = [];
-    }
     axios
       .post("/cars/new", {
         brand,
@@ -43,17 +38,15 @@ class AddNewCar extends Component {
         color,
         year,
         mileage,
-        description,
-        photos
+        description
       })
       .then(response => {
-        console.log(response);
-        this.props.savePhotos([])
+        console.log(response.data._id);
+        this.upload(response.data._id);
       })
       .catch(error => console.log(error));
         console.log(this.state)
       
-      console.log(window.location);
       alert("New car is created!")
       this.setState({
         brand: "",
@@ -62,25 +55,49 @@ class AddNewCar extends Component {
         color: "",
         year: "",
         mileage: "",
-        description: "",
-        photos: []
+        description: ""
       })
-      window.location.reload();
+      // window.location.reload();
   }
-  checkState(){
-    console.log("this state",this.state)
-    console.log("this props =>>>", this.props);
-    console.log(this.props.getPhotos())
+  onDrop(photo){
+    console.log("PHOTO!", photo);
+    var tempArr = this.state.files;
+    tempArr.push(photo[0]);
+    this.setState({
+        files: tempArr  // here we store pics in this.state
+    })
+    console.log(this.state.files);
   }
+  upload(id){
+    var counter = 0;
+    console.log(id);
+    console.log(this.state.files);
+    for(let i = 0; i<this.state.files.length; i++){
+        superagent
+            .post(`/api/upload/${id}`)
+            .attach('item', this.state.files[i]) 
+            .end((error, response) => {
+                if (error) console.log(error);
+                counter++;
+                if(counter===this.state.files.length){
+                  console.log("DAAAAAAAAA");
+                  this.clearPhotos();
+                }
+                console.log('File Uploaded Succesfully'); // Just taking all pics from this.state.files and send them on the back-end and then to s3
+            })                                        // and getting back urls to those pics
+    }
+}
+clearPhotos(){
+  this.setState({
+    files: []
+  })
+}
 
   render() {
     return (
       <div className="addnewcar-container">
         <h2>Add a new car</h2>
-        <form
-          className="addnewcar-form"
-          onSubmit={event => this.handleSubmit(event)}
-        >
+        <div className="addnewcar-form">
           <table>
             <tbody>
               <tr>
@@ -119,6 +136,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("price", event)}
                     className="input"
+                    type="number"
                     defaultValue={this.state.price}
                   />
                 </td>
@@ -143,6 +161,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("year", event)}
                     className="input"
+                    type="number"
                     defaultValue={this.state.year}
                   />
                 </td>
@@ -155,6 +174,7 @@ class AddNewCar extends Component {
                   <input
                     onChange={event => this.handleChange("mileage", event)}
                     className="input"
+                    type="number"
                     defaultValue={this.state.mileage}
                   />
                 </td>
@@ -171,18 +191,24 @@ class AddNewCar extends Component {
                   />
                 </td>
               </tr>
-              <tr>
-                <td>
-                  <p className="inputparagraph">Photo: </p>
-                </td>
-              </tr>
-              <tr><td><input type="submit" className="btn btn-primary input" /></td></tr>
-              
+              <tr><td>
+                    <div className="uploader">
+                        <Dropzone className="dropzone" onClick={(event) => event.preventDefault()} onDrop={(photo)=> this.onDrop(photo) } multiple={true}> 
+                            <button className="btn btn-warning" onClick={(event) => event.preventDefault()} >+</button>
+                        </Dropzone>
+                        <h4>Chosen photos</h4>
+                        <ul>
+                            {this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} className="prevImg" alt={e._id}/>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => this.delete(e)} >Remove</button>
+                            </li>) }
+                        </ul>
+                    </div>
+              </td></tr>
+              <tr><td><button onClick={(event) => this.handleSubmit(event)} className="btn btn-primary input">Submit</button></td></tr>
             </tbody>
           </table>
-        </form>
-        <Uploader />
-        <button onClick={() => this.checkState()}>Check state</button>
+        </div>
+        
       </div>
     );
   }

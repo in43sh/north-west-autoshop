@@ -8,8 +8,8 @@
 }
 
 .admin-requests-container {
-  width: 80vh;
-  border: 1px solid black;
+  margin-top: 10px;
+  border-bottom: 1px solid brown; 
 }
 .admin-parts-container.container {
   /* display: flex; */
@@ -29,9 +29,9 @@ border: 1px solid GREY;
   margin-bottom: 25px; 
   text-align: center;
 }
-#part_box{
+/* #part_box{
   max-width: 400px;
-}
+} */
 .form-area{
   max-width: 35vh;
   max-height: 40vh;
@@ -50,7 +50,7 @@ border: 1px solid GREY;
   margin:8px;
   transform:translateY(50%);
   position:relative;
-  margin-left: 5vh;
+  margin-bottom: 15px;
 }
 
 .slider {
@@ -85,10 +85,16 @@ input:checked + .slider {
   box-shadow:0 0 0 2px limeGreen,0 0 2px limeGreen;
 }
 #list_of_parts{
-  display: inline-box;
-  flex-direction: column;
-  background-color: black;
-  width: 100%;
+  -moz-column-width: 19em;
+    -webkit-column-width: 19em;
+    -moz-column-gap: 1em;
+    -webkit-column-gap:1em; 
+    height: 100%
+}
+#list_of_parts{
+  display: table-row-group;
+    /* padding:  .5rem; */
+    width:  100%;
 }
 .part_cont{
   max-width: 350px;
@@ -99,5 +105,34 @@ input:checked + .slider {
 .you-must-log-in-div{
   margin-top: 100px;
 }
-
-
+.col-md-3{
+  /* border: 1px silver groove; */
+  /* height: 800px; */
+}
+.list_of_requests{
+    margin: auto;
+    width: 70%;
+    border: 3px solid green;
+    padding: 10px;
+    align-content: center;
+    background-color: azure;
+}
+#part_box{
+    border-bottom:  1px silver groove;
+    /* padding: auto; */
+    margin-bottom: 15px; 
+    /* margin: auto; */
+}
+.parts{
+    margin: auto;
+    width: 70%;
+    border: 1px solid green;
+    padding: 10px;
+    align-content: center;
+    background-color: azure;
+    border-radius: 5%;
+}
+.part-btn{
+  margin-left: 15px;
+  margin-top: -25px;
+}

@@ -34,7 +34,7 @@ export default class Cars extends Component {
               </div>
               <div className="row">
                 <div className="col-md-4">
-                  {car.photos.length == 0 && <img src={aws} alt="part" id="photo" className="photos"/>} 
+                  {car.photos.length === 0 && <img src={aws} alt="part" id="photo" className="photos"/>} 
                   {car.photos.length>0 && <img src={car.photos[0]} alt="part" id="photo" className="photos"/>}
                 </div>
                 <div className="col-md-4">

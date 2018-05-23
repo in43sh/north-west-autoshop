@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import aws from "../../images/aws.png";
 import Navbar from "../../Navbar/Navbar";
 import Slider from 'react-slick';
 // import { Link } from 'react-router-dom';
 import "./OneCar.css";
-
-// import aws from "../images/aws.png";
 
 export default class OneCar extends Component {
   constructor(props) {

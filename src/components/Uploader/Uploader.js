@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import superagent  from 'superagent';
 import './Uploader.css';
-import axios from 'axios';
+// import axios from 'axios';
 import { connect } from 'react-redux';
 import { getPhotos } from '../../redux/ducks/reducer';
 import { savePhotos } from '../../redux/ducks/reducer';
@@ -72,7 +72,7 @@ class Uploader extends Component {
                         </Dropzone>
                         <h4>Chosen photos</h4>
                         <ul>
-                            {this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} className="prevImg" />
+                            {this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} className="prevImg" alt="pic"/>
                             <button type="button" className="btn btn-danger btn-sm" onClick={() => this.delete(e)}>Remove</button>
                             </li>) }
                         </ul>

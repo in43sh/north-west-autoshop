@@ -210,22 +210,40 @@ class Admin extends Component {
         }
       })
   }
-  update_list_of_cars() {
-    axios.get('/cars/all')
-      .then(res => {
-        this.setState({ cars: res.data })
-      })
-      .catch(error => console.log(error));
+  update_list_of_cars(id) {
+    // axios.get('/cars/all')
+    //   .then(res => {
+    //     this.setState({ cars: res.data })
+    //   })
+    //   .catch(error => console.log(error));
+    var carArray = this.state.cars;
+    for(let i = 0; i< carArray.length; i++){
+      console.log(carArray[i]._id===id, carArray[i]._id, id);
+      if(carArray[i]._id === id){
+        for(let k = i; k<carArray.length; k++){
+          carArray[k] = carArray[k+1];
+        }
+        console.log("deleting!");
+        carArray.pop();
+        break;
+      }
+    }
+    this.setState({
+      cars: carArray
+    })
+    console.log(this.state.cars);
   }
-  handleCarDelete(i) {
+
+  handleCarDelete(i) { // Deleting car by ID
     var id = {
       id: i
     }
     axios.post('/cars/delete', id)
       .then(res => {
         if (res.data) {
-          this.update_list_of_cars();
-        } else {
+          this.clearState();
+          this.update_list_of_cars(i);
+          } else {
           console.log("can't delete this car")
         }
       })
@@ -349,29 +367,28 @@ class Admin extends Component {
 
   render() {
     const { user } = this.props;
-    //console.log(user);
     const listOfRequests = this.state.requests.map(request => (
-      <div className="admin-requests-container" key={request._id}>
-        <div>Name: {request.name}</div>
-        <div>Phone: {request.phone}</div>
-        <div>Message: {request.message}</div>
-        <button className="btn btn-danger" onClick={() => this.handleRequestDelete(request._id)}>Delete</button>
+      <div className="admin-requests-container border-top-0" key={request._id}>
+          <div>Name: {request.name}</div>
+          <div>Phone: {request.phone}</div>
+          <div>Message: {request.message}</div>
+          <button className="btn btn-danger" onClick={() => this.handleRequestDelete(request._id)}>Delete</button>
       </div>
     ));
 
     const listOfCars = this.state.cars.map((car, index) => (
 
       <div className="col-md-3 car-cont" key={index}>
-        <figure className="card card-product">
-          <figcaption className="info-wrap">
-            <div className="action-wrap">
+        <figure>
+          <figcaption>
+            <div>
               <div id="switcher">
                 <label className="switch">
                   <input type="checkbox" id="part_edit_switcher" checked={this.state.temp_id === car._id} onClick={() => this.edit_car(car)} />
                   <span className="slider"></span>
                 </label>
                 Edit
-                           </div>
+                </div>
               <form onSubmit={(event) => this.edit_car_submit(event, index)}>
                 <label>Brand : </label><input type='text' className='form-control' onChange={event => this.handleChange("brand", event)} placeholder="Brand" defaultValue={car.brand} disabled={this.state.temp_id !== car._id} />
                 <label>Model : </label><input type='text' className='form-control' onChange={event => this.handleChange("model", event)} placeholder="Model" defaultValue={car.model} disabled={this.state.temp_id !== car._id} />
@@ -380,21 +397,20 @@ class Admin extends Component {
                 <label>Mileage :</label><input type='text' className='form-control' onChange={event => this.handleChange("mileage", event)} placeholder="Mileage" defaultValue={car.mileage} disabled={this.state.temp_id !== car._id} />
                 <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={car.description} rows="7" disabled={this.state.temp_id !== car._id} />
                 <ul>  {car.photos && car.photos.length>0 && car.photos.map((e, i) => <li key={i}><img src={e} className="prevImg" />
-                            <button type="button" className="btn btn-danger btn-xs" onClick={() => this.deletePhoto(car._id, e)} disabled={this.state.temp_id !== car._id}>Remove</button>
+                            <button type="button" className="btn btn-danger btn-xs" onClick={() => this.deletePhoto(car._id, e)} disabled={this.state.temp_id !== car._id}>x</button>
                             </li>) }
                               
                         </ul>
                         <div>
                 <div>
                     <div className="uploader">
-                    {/* this.onDrop */}
                         <Dropzone className="dropzone" onClick={(event) => event.preventDefault()} onDrop={(photo)=> this.onDrop(photo) } multiple={true} disabled={this.state.temp_id !== car._id}> 
                             <button className="btn btn-warning" disabled={this.state.temp_id !== car._id} onClick={(event) => event.preventDefault()} >+</button>
                         </Dropzone>
                         <h4>Chosen photos</h4>
                         <ul>
                             {this.state.temp_id === car._id && this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} className="prevImg" />
-                            <button type="button" className="btn btn-danger btn-sm" onClick={() => this.delete(e)} disabled={this.state.temp_id !== car._id}>Remove</button>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => this.delete(e)} disabled={this.state.temp_id !== car._id}>x</button>
                             </li>) }
                         </ul>
                     </div>
@@ -412,56 +428,105 @@ class Admin extends Component {
     ));
 
     const listOfParts = this.state.parts.map((part, index) => (
-      
-      <div className="col-md-3 car-cont" key={index}>
-        <figure className="card card-product">
-          <figcaption className="info-wrap">
-            <div className="action-wrap">
-              <div id="switcher">
-                <label className="switch">
-                  <input type="checkbox" id="part_edit_switcher" checked={this.state.temp_id === part._id} onClick={() => this.edit_part(part)} />
-                  <span className="slider"></span>
-                </label>
-                Edit
-              </div>
-              <form onSubmit={(event) => this.edit_part_submit(event)}>
-                <label>Title : </label><input type='text' className='form-control' onChange={event => this.handleChange("title", event)} placeholder="Title" defaultValue={part.title} disabled={this.state.temp_id !== part._id} />
-                <label>Brand : </label><input type='text' className='form-control' onChange={event => this.handleChange("brand", event)} placeholder="Brand" defaultValue={part.brand} disabled={this.state.temp_id !== part._id} />
-                <label>Model : </label><input type='text' className='form-control' onChange={event => this.handleChange("model", event)} placeholder="Model" defaultValue={part.model} disabled={this.state.temp_id !== part._id} />
-                <label>Price : </label><input type='text' className='form-control' onChange={event => this.handleChange("price", event)} placeholder="Price" defaultValue={part.price} disabled={this.state.temp_id !== part._id} />
-                <label>Condition :</label><input type='text' className='form-control' onChange={event => this.handleChange("condition", event)} placeholder="Condition" defaultValue={part.condition} disabled={this.state.temp_id !== part._id} />
-                <label>Year :</label><input type='text' className='form-control' onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={part.year} disabled={this.state.temp_id !== part._id} />
-                <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={part.description} rows="7" disabled={this.state.temp_id !==part._id} />
-                <button className="btn btn-danger" onClick={() => this.handlePartDelete(part._id)} disabled={this.state.temp_id !== part._id}>Delete</button>
-                
-                <input type="submit" id="submit" name="submit" className="btn btn-primary pull-right" disabled={this.state.temp_id !== part._id} />
-              </form>
+      <div id="part_box" key={part._id}>
+      <div className="row" >
+          <div className="col-lg-5">
+              <label className="switch">
+                <input type="checkbox" id="part_edit_switcher" checked={this.state.temp_id === part._id} onClick={() => this.edit_part(part)} />
+                <span className="slider"></span>
+              </label>
+              Edit
+            <button className="btn btn-danger part-btn" onClick={() => this.handlePartDelete(part._id)} disabled={this.state.temp_id !== part._id}>Delete</button>
+            <button className="btn btn-primary part-btn" onClick={() => this.handlePartDelete(part._id)} disabled={this.state.temp_id !== part._id}>Submit</button>
+          </div>
+          <div className="col-md-4">
+          </div>
+        </div>
+      <div className="row" >
+        <div className="col-md-3"> 
+          <label>Title : </label><input type='text' className='form-control' onChange={event => this.handleChange("title", event)} placeholder="Title" defaultValue={part.title} disabled={this.state.temp_id !== part._id} />
+          <label>Brand : </label><input type='text' className='form-control' onChange={event => this.handleChange("brand", event)} placeholder="Brand" defaultValue={part.brand} disabled={this.state.temp_id !== part._id} />
+          <label>Model : </label><input type='text' className='form-control' onChange={event => this.handleChange("model", event)} placeholder="Model" defaultValue={part.model} disabled={this.state.temp_id !== part._id} />
+          <label>Price : </label><input type='text' className='form-control' onChange={event => this.handleChange("price", event)} placeholder="Price" defaultValue={part.price} disabled={this.state.temp_id !== part._id} />
+        </div>
+        <div className="col-md-3">
+          <label>Condition :</label><input type='text' className='form-control' onChange={event => this.handleChange("condition", event)} placeholder="Condition" defaultValue={part.condition} disabled={this.state.temp_id !== part._id} />
+          <label>Year :</label><input type='text' className='form-control' onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={part.year} disabled={this.state.temp_id !== part._id} />
+          <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={part.description} rows="4" disabled={this.state.temp_id !==part._id} />
+        </div>
+        <div className="col-md-3">
+            <ul>  {part.photos && part.photos.length > 0 && part.photos.map((e, i) => <li key={i}><img src={e} className="prevImg" />
+                <button type="button" className="btn btn-danger btn-xs" onClick={() => this.deletePhoto(part._id, e)} disabled={this.state.temp_id !== part._id}>x</button>
+              </li>)}
+            </ul>
+        </div>
+        <div className="col-md-3">
+            <div className="uploader">
+              <Dropzone className="dropzone" onClick={(event) => event.preventDefault()} onDrop={(photo) => this.onDrop(photo)} multiple={true} disabled={this.state.temp_id !== part._id}>
+                <button className="btn btn-warning btn-xs" disabled={this.state.temp_id !== part._id} onClick={(event) => event.preventDefault()} >+</button>
+              </Dropzone>
+              {this.state.temp_id === part._id && <p>Chosen photos</p>}
+              {this.state.temp_id === part._id && this.state.files.length > 0 && this.state.files.map((e, i) =>
+                <small key={i}><p>{e.name} - <img src={e.preview} className="prevImg" />
+                  <button type="button" className="btn btn-danger btn-xs" onClick={() => this.delete(e)} disabled={this.state.temp_id != part._id}>x</button></p>
+                </small>)}
             </div>
-          </figcaption>
-        </figure>
+        </div>
       </div>
+    </div>
+      // <div className="col-md-3 car-cont" key={index}>
+      //   <figure className="card card-product">
+      //     <figcaption className="info-wrap">
+      //       <div className="action-wrap">
+      //         <div id="switcher">
+      //           <label className="switch">
+      //             <input type="checkbox" id="part_edit_switcher" checked={this.state.temp_id === part._id} onClick={() => this.edit_part(part)} />
+      //             <span className="slider"></span>
+      //           </label>
+      //           Edit
+      //         </div>
+      //         <form onSubmit={(event) => this.edit_part_submit(event)}>
+      //           <label>Title : </label><input type='text' className='form-control' onChange={event => this.handleChange("title", event)} placeholder="Title" defaultValue={part.title} disabled={this.state.temp_id !== part._id} />
+      //           <label>Brand : </label><input type='text' className='form-control' onChange={event => this.handleChange("brand", event)} placeholder="Brand" defaultValue={part.brand} disabled={this.state.temp_id !== part._id} />
+      //           <label>Model : </label><input type='text' className='form-control' onChange={event => this.handleChange("model", event)} placeholder="Model" defaultValue={part.model} disabled={this.state.temp_id !== part._id} />
+      //           <label>Price : </label><input type='text' className='form-control' onChange={event => this.handleChange("price", event)} placeholder="Price" defaultValue={part.price} disabled={this.state.temp_id !== part._id} />
+      //           <label>Condition :</label><input type='text' className='form-control' onChange={event => this.handleChange("condition", event)} placeholder="Condition" defaultValue={part.condition} disabled={this.state.temp_id !== part._id} />
+      //           <label>Year :</label><input type='text' className='form-control' onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={part.year} disabled={this.state.temp_id !== part._id} />
+      //           <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={part.description} rows="7" disabled={this.state.temp_id !==part._id} />
+      //           <button className="btn btn-danger" onClick={() => this.handlePartDelete(part._id)} disabled={this.state.temp_id !== part._id}>Delete</button>
+                
+      //           <input type="submit" id="submit" name="submit" className="btn btn-primary pull-right" disabled={this.state.temp_id !== part._id} />
+      //         </form>
+      //       </div>
+      //     </figcaption>
+      //   </figure>
+      // </div>
     ));
 
     return (
       <div>
         < Navbar />
-        <button onClick={ () => this.checkState() }>CHEACK STATE</button>
         <div className="admin-main-container">
           {user && <div>
-            <button onClick={ () => this.logout() }>Log out</button>
             <h1>Admin</h1>
-            <h2>Requests</h2>
-            {listOfRequests}
+            <button type="button" className="btn btn-outline-danger" onClick={ () => this.logout() }>Log out</button>
+            <div className="list_of_requests">
+              <h2>Requests</h2>
+              {listOfRequests}
+            </div>
+            
+            <AddNewCar />
             <h2>Cars</h2>
             <div id="list_of_parts">
               {listOfCars}
             </div>
-            <AddNewCar />
-            <h2>Parts</h2>
-            <div id="list_of_parts">
+            <AddNewPart />
+            
+            <div className="parts">
+              <h2>Parts</h2>
               {listOfParts}
             </div>
-            <AddNewPart />
+            
           </div>}
           {!user && <div className="you-must-log-in-div"><p>You must log in! <Link to="/login">Log in</Link></p></div>}
 
