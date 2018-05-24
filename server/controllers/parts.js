@@ -10,7 +10,6 @@ module.exports = {
     // console.log("all parts")
     Part.find({})
               .then(data => {
-                // console.log(data);
                 res.status(200).json(data);
               })
               .catch(err => {
@@ -19,10 +18,6 @@ module.exports = {
               
     },
     new: function(req, res) {
-
-        // console.log("++++++++++++++++++++++++++++++++++++")
-        // console.log(req.body)
-        // console.log('+++++++++++++++++++')
         var part = new Part({
                 title: req.body.title,
                 brand: req.body.brand,
@@ -45,6 +40,15 @@ module.exports = {
           })
             
   },
+  find: function(req, res) {
+    Part.findOne({ _id: req.body._id })
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => {
+        res.status(500).json(false);
+      });
+  },
   delete: function(req, res){
     console.log('req.body ---->', req.body);
     console.log('req.body.id ---->', req.body.id);
@@ -66,7 +70,7 @@ module.exports = {
                 condition: req.body.condition,
                 year: req.body.year,
                 description: req.body.description,
-                // photos: req.body.photos
+                photos: req.body.photos
     }, function(err, data){
       if(err){
         console.log("can't delete")
@@ -76,6 +80,21 @@ module.exports = {
         console.log("the part was deleted")
         console.log(data);
         res.status(200).json(true)
+      }
+    }) 
+  },
+  addPhoto: function(params){
+    console.log(params);
+    Part.findByIdAndUpdate({ _id: params.id }, {
+                $push: {photos: params.imageUrl}
+    }, function(err, data){
+      if(err){
+        console.log("can't edit")
+        console.log(err);
+        res.json(false)
+      }else{
+        console.log("Photos are uploaded!")
+        console.log(data);
       }
     }) 
   }

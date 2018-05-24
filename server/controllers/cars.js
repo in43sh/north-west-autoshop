@@ -72,6 +72,7 @@ module.exports = {
                 year: req.body.year,
                 description: req.body.description,
                 mileage: req.body.mileage,
+                photos: req.body.photos
     }, function(err, data){
       if(err){
         console.log("can't edit")
@@ -84,7 +85,7 @@ module.exports = {
       }
     }) 
   },
-  editPhoto: function(params){
+  addPhoto: function(params){
     console.log(params);
     Car.findByIdAndUpdate({ _id: params.id }, {
                 $push: {photos: params.imageUrl}

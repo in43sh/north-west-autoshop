@@ -64,7 +64,11 @@ module.exports = function(app) {
 	app.post("/parts/edit", (req, res, next) => {
 		part.edit(req, res)
 	})
-
+	app.post("/parts/find", (req, res, next) => {
+		//console.log(req.body)
+		//console.log("CAR BY ID")
+		part.find(req, res)
+	});
 	// Requests functions
 	app.get("/requests/all", (req, res, next) => {
 		request.all(req, res)
@@ -104,8 +108,8 @@ module.exports = function(app) {
 		user.all(req, res)
 	});
 
-	app.post('/api/upload/:id', upload.single('item'), (req, res) => {
-		console.log(req.body);
+	app.post('/api/upload/:x/:id', upload.single('item'), (req, res) => {
+		console.log(req.file);
 		var params = {
 			Bucket: process.env.BUCKET,
 			Key: req.file.originalname, 
@@ -126,8 +130,12 @@ module.exports = function(app) {
 			imageUrl: imageUrl
 		}
 		console.log("+++++++++++++++++++++++++");
-		console.log(req.params);
-		car.editPhoto(send)
+		// console.log(req.params);
+		if(req.params.x=="cars"){
+			car.addPhoto(send);
+		}else if(req.params.x=="parts"){
+			part.addPhoto(send);
+		}
 		res.status(200).send(imageUrl);
 	});
 
