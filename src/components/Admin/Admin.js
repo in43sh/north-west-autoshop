@@ -121,8 +121,10 @@ class Admin extends Component {
           this.upload(this.state.temp_id, "cars");
           this.photos_deletion_submitted("cars", temp_id);
           this.edit_cancel();
+          alert("the car was updated");
           // console.log("the car was updated"); /// ++++++++++++++++++ ADD A MESSAGE!
         } else {
+          alert("can't update this car");
           // console.log("can't update this car") /// ++++++++++++++++++ ADD A MESSAGE!
         }
       })
@@ -205,8 +207,10 @@ class Admin extends Component {
           this.upload(this.state.temp_id, "parts");
           this.photos_deletion_submitted("parts", temp_id);
           this.edit_cancel();
+          alert("the part was updated");
           // console.log("the part was updated");   /// ++++++++++++++++++ ADD A MESSAGE!
         } else {
+          alert("can't update this part");
           // console.log("can't update this part") /// ++++++++++++++++++ ADD A MESSAGE!
         }
       })
