@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import aws from '../images/aws.png';
-import Navbar from '../Navbar/Navbar'
+import Navbar from '../Navbar/Navbar';
+import { Link } from 'react-router-dom';
 import './Parts.css';
 
 export default class Parts extends Component {
@@ -25,28 +26,29 @@ export default class Parts extends Component {
   render() {
     const listOfParts = this.state.parts.map((part, index) => {
       return (
-        <div>
-        
-        <div id="box" key={index}>
-          <div className="container" id="part">
-              <div className="row">
-                  <div className="col-md-12" id="top" >
-                      <h1 id="title">{ part.title }</h1>
-                  </div>
-              </div>
-              <div className="row">
-                  <div className="col-md-4"><img src={aws} alt="part" id="photo"/></div>
-                  <div className="col-md-4">
-                      <p id="model">{ part.year } { part.brand } { part.model }</p>
-                      <p id="condition">Condition: { part.condition} </p>
-                  </div>
-                  <div className="col-md-4">
-                      <p id="price">${ part.price }</p>
-                  </div>
+        <Link to={`/part/${ part._id }`} key={index}>
+          <div>
+            <div id="box" key={index}>
+              <div className="container" id="part">
+                <div className="row">
+                    <div className="col-md-12" id="top" >
+                        <h1 id="title">{ part.title }</h1>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-4"><img src={aws} alt="part" id="photo"/></div>
+                    <div className="col-md-4">
+                        <p id="model">{ part.year } { part.brand } { part.model }</p>
+                        <p id="condition">Condition: { part.condition} </p>
+                    </div>
+                    <div className="col-md-4">
+                        <p id="price">${ part.price }</p>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
-          </div>
+        </Link>
       )})
 
 
