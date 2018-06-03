@@ -1,6 +1,7 @@
 
 
 .parts-main-container {
+    min-height: 92vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -173,5 +174,11 @@ background-size:cover;
 	font-weight:bold;
 	font-size:1.4em;
 }
-  
+.emptyCars{
+  height: 75vh;
+}
+.emptyCars-box{
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+}
   
