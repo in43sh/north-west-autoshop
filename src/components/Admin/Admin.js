@@ -568,9 +568,11 @@ class Admin extends Component {
             
             <AddNewCar />
             <h2>Cars</h2>
-            <div id="list_of_parts">
-              {listOfCars}
-            </div>
+            {!this.state.cars.length &&
+              <div id="list_of_parts">
+                {listOfCars}
+              </div>}
+            
             <AddNewPart />
             
             <div className="parts">
