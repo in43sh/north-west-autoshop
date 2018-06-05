@@ -17,7 +17,7 @@ export default class Navbar extends Component {
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>
                         </label>
-                        <p className="navbar-brand">NWEAR</p>
+                        <p className="navbar-brand">N.E.A.R.</p>
                         
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">

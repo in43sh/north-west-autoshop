@@ -24,32 +24,38 @@ export default class Parts extends Component {
 
 
   render() {
-    const listOfParts = this.state.parts.map((part, index) => {
-      return (
-        <Link to={`/part/${ part._id }`} key={index}>
-          <div>
-            <div id="box" key={index}>
-              <div className="container" id="part">
-                <div className="row">
-                    <div className="col-md-12" id="top" >
-                        <h1 id="title">{ part.title }</h1>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-4"><img src={aws} alt="part" id="photo"/></div>
-                    <div className="col-md-4">
-                        <p id="model">{ part.year } { part.brand } { part.model }</p>
-                        <p id="condition">Condition: { part.condition} </p>
-                    </div>
-                    <div className="col-md-4">
-                        <p id="price">${ part.price }</p>
-                    </div>
+    let listOfParts = null;
+    if(this.state.parts.length>0){
+      listOfParts = this.state.parts.map((part, index) => {
+        return (
+          <Link to={`/part/${ part._id }`} key={index}>
+            <div>
+              <div id="box" key={index}>
+                <div className="container" id="part">
+                  <div className="row">
+                      <div className="col-md-12" id="top" >
+                          <h1 id="title">{ part.title }</h1>
+                      </div>
+                  </div>
+                  <div className="row">
+                      <div className="col-md-4"><img src={aws} alt="part" id="photo"/></div>
+                      <div className="col-md-4">
+                          <p id="model">{ part.year } { part.brand } { part.model }</p>
+                          <p id="condition">Condition: { part.condition} </p>
+                      </div>
+                      <div className="col-md-4">
+                          <p id="price">${ part.price }</p>
+                      </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </Link>
-      )})
+          </Link>
+        )})
+      }else{
+        listOfParts = '';
+      }
+    
 
 
     return (
@@ -58,6 +64,13 @@ export default class Parts extends Component {
       <div className="parts-main-container" id="main">
         <h1 id="list_name">List of parts</h1>
         { listOfParts }
+        {this.state.parts.length < 1 && <div class="row text-center margin-b-40 emptyParts">
+               <div class="col-sm-6 col-sm-offset-3 emptyParts-box">
+                  <h1>Sorry, we have nothing to sell at the moment</h1>
+                  <h4>Please, come back later to check new offers!</h4>
+                </div>
+              </div>
+                }
       </div>
       </div>
     );

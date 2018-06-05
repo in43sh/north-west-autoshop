@@ -555,10 +555,10 @@ class Admin extends Component {
     ));
 
     return (
-      <div>
+      <div >
         < Navbar />
         <div className="admin-main-container">
-          {user && <div>
+          {user && <div className="mainDiv">
             <h1>Admin</h1>
             <button type="button" className="btn btn-outline-danger" onClick={ () => this.logout() }>Log out</button>
             <div className="list_of_requests">

@@ -136,3 +136,6 @@ input:checked + .slider {
   margin-left: 15px;
   margin-top: -25px;
 }
+.mainDiv{
+  width: 100%;
+}
