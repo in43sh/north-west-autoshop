@@ -38,7 +38,10 @@ export default class Parts extends Component {
                       </div>
                   </div>
                   <div className="row">
-                      <div className="col-md-4"><img src={aws} alt="part" id="photo"/></div>
+                      <div className="col-md-4">
+                        {part.photos.length === 0 && <img src={aws} alt="part" id="photo" className="photos" />}
+                        {part.photos.length > 0 && <img src={part.photos[0]} alt="part" id="photo" className="photos" />}
+                      </div>
                       <div className="col-md-4">
                           <p id="model">{ part.year } { part.brand } { part.model }</p>
                           <p id="condition">Condition: { part.condition} </p>

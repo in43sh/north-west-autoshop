@@ -4,6 +4,7 @@ import Navbar from "../../Navbar/Navbar";
 import Slider from 'react-slick';
 // import { Link } from 'react-router-dom';
 import "./OneCar.css";
+import aws from '../../images/aws.png'
 
 export default class OneCar extends Component {
   constructor(props) {
@@ -65,17 +66,18 @@ export default class OneCar extends Component {
               </div>
               <div className="row">
                 <div className="col-md-12 slider-parent-container">
-                  <Slider className="slider-component" {...settings}>
+                  {this.state.photos.length===0 && <img src={aws} alt="part" id="noImage"/>}
+                  {this.state.car.photos && <Slider className="slider-component" {...settings}>
                     { display }
-                  </Slider>
+                    </Slider> }
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-4">
+                <div className="col-md-7">
                   <p id="model">Mileage: {this.state.car.mileage} Color: {this.state.car.color}</p>
                   <p id="condition">{this.state.car.description}</p>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-5">
                   <p id="price">${this.state.car.price}</p>
                 </div>
               </div>
