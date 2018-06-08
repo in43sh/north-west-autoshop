@@ -93,3 +93,14 @@ textarea.form-control {
   color: #fff;
 
 }
+
+.popup-container {
+  position: relative;
+  top: 250px; left: 250px;
+  display: flex;
+  background-color: white;
+}
+
+.popup-element {
+  width: 100px;
+}
