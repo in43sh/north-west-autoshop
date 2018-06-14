@@ -74,7 +74,7 @@ class AddNewCar extends Component {
     console.log(this.state.files);
     for(let i = 0; i<this.state.files.length; i++){
         superagent
-            .post(`/api/upload/${id}`)
+            .post(`/api/upload/cars/${id}`)
             .attach('item', this.state.files[i]) 
             .end((error, response) => {
                 if (error) console.log(error);

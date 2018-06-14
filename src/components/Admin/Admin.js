@@ -454,56 +454,6 @@ class Admin extends Component {
       </div>
     ));
 
-    // const listOfCars = this.state.cars.map((car, index) => (
-
-    //   <div className="col-md-3 car-cont" key={index}>
-    //     <figure>
-    //       <figcaption>
-    //         <div>
-    //           <div id="switcher">
-    //             <label className="switch">
-    //               <input type="checkbox" id="part_edit_switcher" checked={this.state.temp_id === car._id} onClick={() => this.edit_car(car)} />
-    //               <span className="slider"></span>
-    //             </label>
-    //             Edit
-    //             </div>
-    //           <form onSubmit={(event) => this.edit_car_submit(event, index)}>
-    //             <label>Brand : </label><input type='text' className='form-control' onChange={event => this.handleChange("brand", event)} placeholder="Brand" defaultValue={car.brand} disabled={this.state.temp_id !== car._id} />
-    //             <label>Model : </label><input type='text' className='form-control' onChange={event => this.handleChange("model", event)} placeholder="Model" defaultValue={car.model} disabled={this.state.temp_id !== car._id} />
-    //             <label>Price : </label><input type='text' className='form-control' onChange={event => this.handleChange("price", event)} placeholder="Price" defaultValue={car.price} disabled={this.state.temp_id !== car._id} />
-    //             <label>Year :</label><input type='text' className='form-control' onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={car.year} disabled={this.state.temp_id !== car._id} />
-    //             <label>Mileage :</label><input type='text' className='form-control' onChange={event => this.handleChange("mileage", event)} placeholder="Mileage" defaultValue={car.mileage} disabled={this.state.temp_id !== car._id} />
-    //             <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={car.description} rows="7" disabled={this.state.temp_id !== car._id} />
-    //             <ul>  {car.photos && car.photos.length>0 && car.photos.map((e, i) => <li key={i}><img src={e} alt="img" className="prevImg" />
-    //                         <button type="button" className="btn btn-danger btn-xs" onClick={() => this.deletePhoto(car._id, e)} disabled={this.state.temp_id !== car._id}>x</button>
-    //                         </li>) }
-                              
-    //                     </ul>
-    //                     <div>
-    //             <div>
-    //                 <div className="uploader">
-    //                     <Dropzone className="dropzone" onClick={(event) => event.preventDefault()} onDrop={(photo)=> this.onDrop(photo) } multiple={true} disabled={this.state.temp_id !== car._id}> 
-    //                         <button className="btn btn-warning" disabled={this.state.temp_id !== car._id} onClick={(event) => event.preventDefault()} >+</button>
-    //                     </Dropzone>
-    //                     <h4>Chosen photos</h4>
-    //                     <ul>
-    //                         {this.state.temp_id === car._id && this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} alt="img" className="prevImg" />
-    //                         <button type="button" className="btn btn-danger btn-sm" onClick={() => this.delete(e)} disabled={this.state.temp_id !== car._id}>x</button>
-    //                         </li>) }
-    //                     </ul>
-    //                 </div>
-    //             </div>
-    //             { this.state.image && <img src={this.state.image.image_url} alt="pic"/> }
-    //         </div>        
-                        
-    //             <button className="btn btn-danger" onClick={() => this.handleDelete(car._id, "cars")} disabled={this.state.temp_id !== car._id}>Delete</button>
-    //             <input type="submit" id="submit" name="submit" className="btn btn-primary pull-right" disabled={this.state.temp_id !== car._id} />
-    //           </form>
-    //         </div>
-    //       </figcaption>
-    //     </figure>
-    //   </div>
-    // ));
     const listOfCars = this.state.cars.map((car, index) => (
       <div id="part_box" key={car._id}>
       <div className="row" >
@@ -523,12 +473,12 @@ class Admin extends Component {
         <div className="col-md-3"> 
           <label>Brand : </label><input type='text' className='form-control' onChange={event => this.handleChange("brand", event)} placeholder="Brand" defaultValue={car.brand} disabled={this.state.temp_id !== car._id} />
           <label>Model : </label><input type='text' className='form-control' onChange={event => this.handleChange("model", event)} placeholder="Model" defaultValue={car.model} disabled={this.state.temp_id !== car._id} />
-          <label>Price : </label><input type='text' className='form-control' onChange={event => this.handleChange("price", event)} placeholder="Price" defaultValue={car.price} disabled={this.state.temp_id !== car._id} />
-          <label>Year :</label><input type='text' className='form-control' onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={car.year} disabled={this.state.temp_id !== car._id} />
+          <label>Price : </label><input type='text' className='form-control' type="number" onChange={event => this.handleChange("price", event)} placeholder="Price" defaultValue={car.price} disabled={this.state.temp_id !== car._id} />
+          <label>Year :</label><input type='text' className='form-control' type="number" onChange={event => this.handleChange("year", event)} placeholder="Year" defaultValue={car.year} disabled={this.state.temp_id !== car._id} />
            </div>
         <div className="col-md-3">
           <label>Color : </label><input type='text' className='form-control' onChange={event => this.handleChange("color", event)} placeholder="Color" defaultValue={car.color} disabled={this.state.temp_id !== car._id} />
-          <label>Mileage :</label><input type='text' className='form-control' onChange={event => this.handleChange("mileage", event)} placeholder="Mileage" defaultValue={car.mileage} disabled={this.state.temp_id !== car._id} />
+          <label>Mileage :</label><input type='text' className='form-control' type="number" onChange={event => this.handleChange("mileage", event)} placeholder="Mileage" defaultValue={car.mileage} disabled={this.state.temp_id !== car._id} />
           <label>Description :</label><textarea type='text' className='form-control' onChange={event => this.handleChange("description", event)} placeholder="Description" defaultValue={car.description} rows="4" disabled={this.state.temp_id !==car._id} />
         </div>
         <div className="col-md-3">
