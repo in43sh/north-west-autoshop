@@ -227,11 +227,16 @@ input:checked + .slider {
   box-shadow:0 0 0 2px red,0 0 2px blue;
 }
 #searchBox{
+  display: flex;
   
 }
 #searchInput{
   background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
+  margin-top: 5px;
+}
+.searchBoxButtons{
+  margin-top: 19px;
 }
 
 
