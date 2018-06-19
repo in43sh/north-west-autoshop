@@ -11,14 +11,15 @@ export default class Cars extends Component {
       cars : [],
       search: false,
       inputSearch: {
-        brand: '',
-        model: '',
+        brand: null,
+        model: null,
         yearMin: 0,
         yearMax: Number.MAX_VALUE,
         priceMin: 0,
-        priceMax: Number.MAX_VALUE, 
+        priceMax: Number.MAX_VALUE,
+        listOfModels: []
       },
-      listOfModels: []
+      copyCars: []
     };
   }
   
@@ -26,7 +27,7 @@ export default class Cars extends Component {
     axios.get('/cars/all')
       .then(res => {
         console.log(res);
-        this.setState({ cars: res.data })
+        this.setState({ cars: res.data, copyCars: res.data })
       })
       .catch(error => console.log(error));
   }
@@ -41,16 +42,83 @@ export default class Cars extends Component {
     console.log(event.target.value);
   }
   searchSubmit(){
-    
+    var copyCars = this.state.copyCars;
+    var resultCars = [];
+    var searchOptions = this.state.inputSearch;
+    copyCars.forEach(function(car){
+      console.log(car._id);
+      if(searchOptions.brand !== null){
+        if(car.brand === searchOptions.brand){
+          if(searchOptions.model !== null){
+            if(car.model === searchOptions.model){
+              if(car.year>=searchOptions.yearMin && car.year<=searchOptions.yearMax && car.price>=searchOptions.priceMin && car.price<=searchOptions.priceMax){
+                resultCars.push(car)
+              }
+            }
+          }else if(car.year>=searchOptions.yearMin && car.year<=searchOptions.yearMax && car.price>=searchOptions.priceMin && car.price<=searchOptions.priceMax){
+            resultCars.push(car);
+          }
+        }
+      }else{
+        if(car.year>=searchOptions.yearMin && car.year<=searchOptions.yearMax && car.price>=searchOptions.priceMin && car.price<=searchOptions.priceMax){
+          resultCars.push(car);
+        }
+      }
+    })
+    this.setState({
+      cars: resultCars
+    })
+
+  }
+  searchCancel(){
+    this.setState({
+      cars: this.state.copyCars
+    })
   }
   searchFilterByBrand(brand){
+    if(brand==="All"){
+      var tempSearch = this.state.inputSearch;
+      tempSearch.brand = null;
+      tempSearch.cars = [];
+      tempSearch.listOfModels = [];
+      this.setState({
+        inputChange: tempSearch //ATTENTION! MIGHT BE A MISTAKE!
+      })
+      return;
+    }
     var cars = [];
-    this.state.cars.forEach(function(car){
+    var temp = this.state.inputSearch;
+    temp.brand = brand;
+    this.state.copyCars.forEach(function(car){
       if(car.brand===brand){
         cars.push(car)
       }
     })
-    console.log(cars);
+    var tempModels = cars.filter(function (item, pos, self) {
+      return self.indexOf(item) == pos;
+    }).sort().map((c, index) => {
+      return (
+        <option key={index}>{c.model}</option>
+      )
+    })
+    temp.listOfModels = tempModels;
+    this.setState({
+      inputSearch: temp
+    })
+  }
+
+  changeState(x,y,val){
+    var temp = this.state[x];
+    if(y){
+      temp[y] = val;
+    }else{
+      temp = val;
+    }
+    this.setState({
+      x: temp
+    })
+    console.log(this.state);
+    console.log(this.state.inputSearch.yearMax-this.state.inputSearch.yearMin)
   }
 
   render() {
@@ -73,8 +141,7 @@ export default class Cars extends Component {
                         {car.photos.length>0 && <img src={car.photos[0]} alt="part" id="photo" className="photos"/>}
                       </div>
                       <div className="col-md-4">
-                          <p id="model">{ car.mileage } miles, Condition: { car.condition }, Color: { car.color }</p>
-                          <p id="condition">{ car.description } </p>
+                          <p id="model">{ car.mileage } miles, Color: { car.color }</p>
                       </div>
                       <div className="col-md-4">
                           <p id="price">${ car.price }</p>
@@ -90,7 +157,7 @@ export default class Cars extends Component {
       listOfCars = ``
     }
     var listOfBrands = [];
-    this.state.cars.forEach(function(car){
+    this.state.copyCars.forEach(function(car){
       listOfBrands.push(car.brand)
     })
     listOfBrands = listOfBrands.filter(function(item, pos, self) {
@@ -114,11 +181,11 @@ export default class Cars extends Component {
                 <input type="checkbox" onClick={() => this.searchClicked()} />
                 <span className="slider"></span>
               </label>
-              <h4 className="switch">Search</h4>
+              <h3 className="switch">Filter</h3>
             </div>
             {this.state.search && <div className="col-sm-3 searchBoxButtons">
               <button className="btn btn-primary" onClick={() => this.searchSubmit()}>Search</button>
-              <button className="btn btn-primary" onClick={console.log("sdd")}>Reset</button>
+              <button className="btn btn-danger" onClick={() => this.searchCancel()}>Reset</button>
               </div>
               }
           </div>
@@ -137,34 +204,35 @@ export default class Cars extends Component {
                 <div className="col-sm-6">
                   <div className="input-group">
                     <div className="input-group-addon"><span>Model:</span></div>
-                    <select className="form-control">
+                    <select className="form-control" disabled={this.state.inputSearch.listOfModels.length===0}>
                       <option value="all">All</option>
-                      <option vale=''>asd</option>
+                        {this.state.inputSearch.listOfModels}
                     </select>
                   </div>
                 </div>
                 <div className="col-sm-3">
                   <div className="input-group">
                     <div className="input-group-addon"><span>Model Year:</span></div>
-                    <input type='number'  className='form-control' placeholder="Min year"/>
+                    <input type='number' className='form-control' placeholder="Min year"
+                      min={this.state.inputSearch.yearMin} max={this.state.inputSearch.yearMax}
+                      onChange={event => this.changeState("inputSearch", 'yearMin', Number(event.target.value))} />
                   </div>
                 </div>
                 <div className="col-sm-3">
                   <div className="input-group">
-                    <div className="input-group-addon"><span>Model Year:</span></div>
-                    <input type='number'  className='form-control' placeholder="Min year"/>
+                    <input type='number'  className='form-control' placeholder="Max year" onChange={event => this.changeState("inputSearch", 'yearMax', Number(event.target.value))}/>
                   </div>
                 </div>
                 <div className="col-sm-3">
                   <div className="input-group">
                     <div className="input-group-addon"><span>Lowest Price:</span></div>
-                    <input type='number'  className='form-control' placeholder="Min $"/>
+                    <input type='number'  className='form-control' placeholder="Min $" onChange={event => this.changeState("inputSearch", 'priceMin', Number(event.target.value))}/>
                   </div>
                 </div>
                 <div className="col-sm-3">
                   <div className="input-group">
                     <div className="input-group-addon"><span>Highest Price:</span></div>
-                    <input type='number' className='form-control' placeholder="Max $"/>
+                    <input type='number' className='form-control' placeholder="Max $" onChange={event => this.changeState("inputSearch", 'priceMin', Number(event.target.value))}/>
                   </div>
                 </div>
               </div>
