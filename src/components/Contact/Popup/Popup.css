@@ -1,4 +1,17 @@
 .popup {
-  width: 500px;
+  width: 80%;
+  color: #fcc500;
+}
+
+.popup-button {
+  background-color: white;
   color: black;
+  padding: 6px 12px;
+}
+
+@media (max-width: 441px) {
+  .popup {
+    width: 80%;
+    color: #fcc500;
+  }
 }
