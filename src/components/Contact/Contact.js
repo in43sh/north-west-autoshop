@@ -44,7 +44,8 @@ export default class Contact extends Component {
         <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h3>
       </div>
       <div className="contact-section">
-        <div className="container">
+        {!this.state.showPopup ?
+          <div className="container">
           <form className="contact-form" onSubmit={(event) => this.handleSubmit(event)}>
             <div className="col-md-6 form-line">
                 <div className="form-group">
@@ -66,14 +67,16 @@ export default class Contact extends Component {
                 </div>
             </div>
             
-          </form>
-          
+          </form> 
         </div>
+        : null}
       </div>
-      <div className="popup-container">
-        {this.state.showPopup ?
-          <Popup className="popup-element" closePopup={this.togglePopup.bind(this)} /> : null
-        }
+      <div className="contact-section">
+        <div className="popup-container">
+          {this.state.showPopup ?
+            <Popup className="popup-element" closePopup={this.togglePopup.bind(this)} /> : null
+          }
+        </div>
       </div>
     </div>
 

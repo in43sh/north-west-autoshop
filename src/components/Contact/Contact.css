@@ -96,13 +96,9 @@ textarea.form-control {
 
 .popup-container {
   position: absolute;
-  git
   display: flex;
-  background-color: white;
-   left: 50%;
-   margin-left: -250px; /* Half the width */
 }
 
 .popup-element {
-  width: 100px;
+  width: 100px; 
 }
