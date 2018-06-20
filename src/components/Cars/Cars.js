@@ -46,7 +46,6 @@ export default class Cars extends Component {
     var resultCars = [];
     var searchOptions = this.state.inputSearch;
     copyCars.forEach(function(car){
-      console.log(car._id);
       if(searchOptions.brand !== null){
         if(car.brand === searchOptions.brand){
           if(searchOptions.model !== null){
@@ -71,9 +70,30 @@ export default class Cars extends Component {
 
   }
   searchCancel(){
+    // var inputSearch2 = {
+    //   brand: null,
+    //   model: null,
+    //   yearMin: 0,
+    //   yearMax: 0,
+    //   priceMin: 0,
+    //   priceMax: 0,
+    //   listOfModels: []
+    // };
+    // inputSearch2.yearMax = Number.MAX_VALUE;
+    // inputSearch2.priceMax = Number.MAX_VALUE;
+    // this.setState({
+    //   cars: this.state.copyCars,
+    //   inputSearch: inputSearch2
+    // }, function(){
+    //   console.log(this.state.inputSearch);
+    // })
+    // console.log(inputSearch2);
+    // console.log(this.state);
     this.setState({
       cars: this.state.copyCars
     })
+
+    
   }
   searchFilterByBrand(brand){
     if(brand==="All"){
@@ -117,8 +137,8 @@ export default class Cars extends Component {
     this.setState({
       x: temp
     })
-    console.log(this.state);
-    console.log(this.state.inputSearch.yearMax-this.state.inputSearch.yearMin)
+    // console.log(this.state);
+    // console.log(this.state.inputSearch.yearMax-this.state.inputSearch.yearMin)
   }
 
   render() {
@@ -232,7 +252,7 @@ export default class Cars extends Component {
                 <div className="col-sm-3">
                   <div className="input-group">
                     <div className="input-group-addon"><span>Highest Price:</span></div>
-                    <input type='number' className='form-control' placeholder="Max $" onChange={event => this.changeState("inputSearch", 'priceMin', Number(event.target.value))}/>
+                    <input type='number' className='form-control' placeholder="Max $" onChange={event => this.changeState("inputSearch", 'priceMax', Number(event.target.value))}/>
                   </div>
                 </div>
               </div>

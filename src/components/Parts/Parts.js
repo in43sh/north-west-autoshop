@@ -188,7 +188,7 @@ export default class Parts extends Component {
               <h3 className="switch">Filter</h3>
             </div>
             {this.state.search && <div className="col-sm-3 searchBoxButtons">
-              <button className="btn btn-primary" onClick={() => this.searchSubmit()}>Search</button>
+              <button className="btn btn-primary" onClick={() => this.searchSubmit()}>Apply</button>
               <button className="btn btn-danger" onClick={() => this.searchCancel()}>Reset</button>
               </div>
               }
@@ -236,7 +236,7 @@ export default class Parts extends Component {
                 <div className="col-sm-3">
                   <div className="input-group">
                     <div className="input-group-addon"><span>Highest Price:</span></div>
-                    <input type='number' className='form-control' placeholder="Max $" onChange={event => this.changeState("inputSearch", 'priceMin', Number(event.target.value))}/>
+                    <input type='number' className='form-control' placeholder="Max $" onChange={event => this.changeState("inputSearch", 'priceMax', Number(event.target.value))}/>
                   </div>
                 </div>
               </div>
