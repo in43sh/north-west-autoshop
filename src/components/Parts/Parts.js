@@ -21,7 +21,8 @@ export default class Parts extends Component {
         priceMax: Number.MAX_VALUE,
         listOfModels: []
       },
-      copyParts: []
+      copyParts: [],
+      filterResult: true
     };
   }
 
@@ -68,6 +69,15 @@ export default class Parts extends Component {
         }
       }
     })
+    if(resultParts.length<1){
+      this.setState({
+        filterResult: false
+      })
+    }else{
+      this.setState({
+        filterResult: true
+      })
+    }
     this.setState({
       parts: resultParts
     })
@@ -75,7 +85,8 @@ export default class Parts extends Component {
   }
   searchCancel(){
     this.setState({
-      parts: this.state.copyParts
+      parts: this.state.copyParts,
+      filterResult: true
     })
   }
   searchFilterByBrand(brand){
@@ -98,7 +109,7 @@ export default class Parts extends Component {
       }
     })
     var tempModels = parts.filter(function (item, pos, self) {
-      return self.indexOf(item) == pos;
+      return self.indexOf(item) === pos;
     }).sort().map((c, index) => {
       return (
         <option key={index}>{c.model}</option>
@@ -166,7 +177,7 @@ export default class Parts extends Component {
       listOfBrands.push(part.brand)
     })
     listOfBrands = listOfBrands.filter(function (item, pos, self) {
-      return self.indexOf(item) == pos;
+      return self.indexOf(item) === pos;
     }).sort().map((b, index) => {
       return (
         <option key={index}>{b}</option>
@@ -245,9 +256,16 @@ export default class Parts extends Component {
         <div id="main2">
         { listOfParts }
         </div>
-        {this.state.parts.length < 1 && <div class="row text-center margin-b-40 emptyParts">
-               <div class="col-sm-6 col-sm-offset-3 emptyParts-box">
+        {this.state.parts.length < 1 && this.state.filterResult && <div className="row text-center margin-b-40 emptyParts">
+               <div className="col-sm-6 col-sm-offset-3 emptyParts-box">
                   <h1>Sorry, we have nothing to sell at the moment</h1>
+                  <h4>Please, come back later to check new offers!</h4>
+                </div>
+              </div>
+                }
+        {!this.state.filterResult && <div className="row text-center margin-b-40 emptyParts">
+               <div className="col-sm-6 col-sm-offset-3 emptyParts-box">
+                  <h1>Sorry, we have nothing according filter settings</h1>
                   <h4>Please, come back later to check new offers!</h4>
                 </div>
               </div>

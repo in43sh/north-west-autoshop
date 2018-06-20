@@ -19,7 +19,8 @@ export default class Cars extends Component {
         priceMax: Number.MAX_VALUE,
         listOfModels: []
       },
-      copyCars: []
+      copyCars: [],
+      filterResult: true
     };
   }
   
@@ -64,8 +65,15 @@ export default class Cars extends Component {
         }
       }
     })
+    var result_bool;
+    if(resultCars.length<1){
+      result_bool = false;
+    }else{
+      result_bool = true;
+    }
     this.setState({
-      cars: resultCars
+      cars: resultCars,
+      filterResult: result_bool
     })
 
   }
@@ -90,7 +98,8 @@ export default class Cars extends Component {
     // console.log(inputSearch2);
     // console.log(this.state);
     this.setState({
-      cars: this.state.copyCars
+      cars: this.state.copyCars,
+      filterResult: true
     })
 
     
@@ -115,7 +124,7 @@ export default class Cars extends Component {
       }
     })
     var tempModels = cars.filter(function (item, pos, self) {
-      return self.indexOf(item) == pos;
+      return self.indexOf(item) === pos;
     }).sort().map((c, index) => {
       return (
         <option key={index}>{c.model}</option>
@@ -181,7 +190,7 @@ export default class Cars extends Component {
       listOfBrands.push(car.brand)
     })
     listOfBrands = listOfBrands.filter(function(item, pos, self) {
-        return self.indexOf(item) == pos;
+        return self.indexOf(item) === pos;
       }).sort().map((b, index) => {
         return (
           <option key={index}>{b}</option>
@@ -261,14 +270,20 @@ export default class Cars extends Component {
           <div id="main2">
             {listOfCars}
           </div>
-          {this.state.cars.length < 1 && <div className="row text-center margin-b-40 emptyCars">
+          {this.state.cars.length < 1 && this.state.filterResult && <div className="row text-center margin-b-40 emptyCars">
             <div className="col-sm-6 col-sm-offset-3 emptyCars-box">
               <h1>Sorry, we have nothing to sell at the moment</h1>
               <h4>Please, come back later to check new offers!</h4>
             </div>
           </div>
-
           }
+          {!this.state.filterResult && <div className="row text-center margin-b-40 emptyCars">
+          <div className="col-sm-6 col-sm-offset-3 emptyCars-box">
+             <h1>Sorry, we have nothing according filter settings</h1>
+             <h4>Please, come back later to check new offers!</h4>
+           </div>
+         </div>
+           }          
         </div>
       </div>
     );
