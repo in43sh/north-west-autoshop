@@ -101,8 +101,6 @@ export default class Cars extends Component {
       cars: this.state.copyCars,
       filterResult: true
     })
-
-    
   }
   searchFilterByBrand(brand){
     if(brand==="All"){
@@ -166,8 +164,8 @@ export default class Cars extends Component {
                   </div>
                   <div className="row">
                       <div className="col-md-4">
-                        {car.photos.length === 0 && <img src={aws} alt="part" id="photo" className="photos"/>} 
-                        {car.photos.length>0 && <img src={car.photos[0]} alt="part" id="photo" className="photos"/>}
+                        {car.photos.length === 0 && <img src={aws} alt="car" id="car-photo"/>} 
+                        {car.photos.length>0 && <img src={car.photos[0]} alt="car" id="car-photo"/>}
                       </div>
                       <div className="col-md-4">
                           <p id="model">{ car.mileage } miles, Color: { car.color }</p>
