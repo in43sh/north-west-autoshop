@@ -1,3 +1,7 @@
+.container {
+  width: 80%;
+}
+
 .slider-container {
   display: flex;
   justify-content: center;
@@ -35,6 +39,10 @@
 
 .parts-img {
   max-height: 150px;
+}
+
+.empty-car-img {
+  max-width: 90%;
 }
 
 #title {
