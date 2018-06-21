@@ -22,7 +22,8 @@ export default class Parts extends Component {
         listOfModels: []
       },
       copyParts: [],
-      filterResult: true
+      filterResult: true,
+      filterShowself: true
     };
   }
 
@@ -86,7 +87,12 @@ export default class Parts extends Component {
   searchCancel(){
     this.setState({
       parts: this.state.copyParts,
-      filterResult: true
+      filterResult: true,
+      filterShowself: false
+    }, function(){
+      this.setState({
+        filterShowself: true
+      })
     })
   }
   searchFilterByBrand(brand){
@@ -204,7 +210,7 @@ export default class Parts extends Component {
               </div>
               }
               </div>
-              {this.state.search && <div className="container" id="searchInput">
+              {this.state.search && this.state.filterShowself && <div className="container" id="searchInput">
               <div className="row">
                 <div className="col-sm-6">
                   <div className="input-group">

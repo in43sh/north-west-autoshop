@@ -18,7 +18,8 @@ class AddNewCar extends Component {
       year: "",
       mileage: "",
       description: "",
-      files: []
+      files: [],
+      formShowself: true
     };
   }
 
@@ -55,7 +56,12 @@ class AddNewCar extends Component {
         color: "",
         year: "",
         mileage: "",
-        description: ""
+        description: "",
+        formShowself: false
+      }, function(){
+        this.setState({
+          formShowself: true
+        })
       })
       // window.location.reload();
   }
@@ -97,6 +103,7 @@ clearPhotos(){
     return (
       <div className="addnewcar-container">
         <h2>Add a new car</h2>
+        {this.state.formShowself &&
         <div className="addnewcar-form">
           <table>
             <tbody>
@@ -208,7 +215,7 @@ clearPhotos(){
             </tbody>
           </table>
         </div>
-        
+        } 
       </div>
     );
   }

@@ -20,7 +20,8 @@ export default class Cars extends Component {
         listOfModels: []
       },
       copyCars: [],
-      filterResult: true
+      filterResult: true,
+      filterShowself: true
     };
   }
   
@@ -78,28 +79,14 @@ export default class Cars extends Component {
 
   }
   searchCancel(){
-    // var inputSearch2 = {
-    //   brand: null,
-    //   model: null,
-    //   yearMin: 0,
-    //   yearMax: 0,
-    //   priceMin: 0,
-    //   priceMax: 0,
-    //   listOfModels: []
-    // };
-    // inputSearch2.yearMax = Number.MAX_VALUE;
-    // inputSearch2.priceMax = Number.MAX_VALUE;
-    // this.setState({
-    //   cars: this.state.copyCars,
-    //   inputSearch: inputSearch2
-    // }, function(){
-    //   console.log(this.state.inputSearch);
-    // })
-    // console.log(inputSearch2);
-    // console.log(this.state);
     this.setState({
       cars: this.state.copyCars,
-      filterResult: true
+      filterResult: true,
+      filterShowself: false
+    }, function(){
+      this.setState({
+        filterShowself: true
+      })
     })
   }
   searchFilterByBrand(brand){
@@ -216,7 +203,7 @@ export default class Cars extends Component {
               </div>
               }
           </div>
-          {this.state.search && <div className="container" id="searchInput">
+          {this.state.search && this.state.filterShowself && <div className="container" id="searchInput">
               <div className="row">
                 <div className="col-sm-6">
                   <div className="input-group">
