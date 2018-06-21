@@ -12,7 +12,8 @@ export default class AddNewPart extends Component {
       price: "",
       condition: "",
       year: "",
-      description: ""
+      description: "",
+      formShowself: true
     };
   }
 
@@ -44,6 +45,14 @@ export default class AddNewPart extends Component {
       })
       .then(response => {
         console.log(response);
+        alert("New part was created!");
+        this.setState({
+          formShowself: false
+        }, function(){
+          this.setState({
+            formShowself: true
+          })
+        })
       })
       .catch(error => console.log(error));
   }
@@ -52,17 +61,7 @@ export default class AddNewPart extends Component {
     return (
       <div className="addnewpart-container">
         <h2>Add a new part</h2>
-        {/* <form className="addnewpart-form" onSubmit={(event) => this.handleSubmit(event)}>
-          <p>Title: <input onChange={(event) => this.handleChange("title", event)} class="input"/></p>
-          <p>Brand: <input onChange={(event) => this.handleChange("brand", event)} class="input"/></p>
-          <p>Model: <input onChange={(event) => this.handleChange("model", event)} class="input"/></p>
-          <p>Price: <input onChange={(event) => this.handleChange("price", event)} class="input"/></p>
-          <p>Condition: <input onChange={(event) => this.handleChange("condition", event)} class="input"/></p>
-          <p>Year: <input onChange={(event) => this.handleChange("year", event)} class="input"/></p>
-          <p>Description: <input onChange={(event) => this.handleChange("description", event)} class="input"/></p>
-          <input type="submit"  class="input"/>
-        </form> */}
-
+        {this.state.formShowself &&
         <form
           className="addnewpart-form"
           onSubmit={event => this.handleSubmit(event)}
@@ -114,6 +113,7 @@ export default class AddNewPart extends Component {
                   <input
                     onChange={event => this.handleChange("price", event)}
                     className="input"
+                    type="number"
                   />
                 </td>
               </tr>
@@ -136,6 +136,7 @@ export default class AddNewPart extends Component {
                   <input
                     onChange={event => this.handleChange("year", event)}
                     className="input"
+                    type="number"
                   />
                 </td>
               </tr>
@@ -158,6 +159,7 @@ export default class AddNewPart extends Component {
             </tbody>
           </table>
         </form>
+        }
       </div>
     );
   }
