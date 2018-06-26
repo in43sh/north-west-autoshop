@@ -36,8 +36,6 @@ module.exports = function(app) {
 		car.new(req, res)
 	});
 	app.post("/cars/find", (req, res, next) => {
-		//console.log(req.body)
-		//console.log("CAR BY ID")
 		car.find(req, res)
 	});
 	app.post("/cars/delete", (req, res, next) => {
@@ -65,8 +63,6 @@ module.exports = function(app) {
 		part.edit(req, res)
 	})
 	app.post("/parts/find", (req, res, next) => {
-		//console.log(req.body)
-		//console.log("CAR BY ID")
 		part.find(req, res)
 	});
 	// Requests functions
@@ -74,7 +70,6 @@ module.exports = function(app) {
 		request.all(req, res)
 	});
 	app.post("/requests/new", (req, res, next) =>{
-		//console.log(req.body);
 		request.new(req, res);
 	});
 	app.post("/requests/delete", (req, res, next) =>{
@@ -86,25 +81,18 @@ module.exports = function(app) {
 
 	// Users functions
 	app.post('/register', (req, res, next)=>{
-		// console.log('routes.js: registration completed')
-		// console.log('----------------------------------')
 		user.register(req, res)
 	});
 	app.post('/login', (req, res, next)=>{
-		// console.log('routes.js: you are logged in')
-		// console.log('----------------------------------')
 		user.login(req, res)
 	});
 	app.post("/user/logout", (req, res, next)=>{
-		// console.log('routes.js: you are logged out')
 		user.logout(req, res)
 	});
 	app.get("/user/data", (req, res, next)=>{
-		// console.log('routes.js: retrieveing user data')
 		user.getUserData(req, res)
 	});
 	app.get("/user/all", (req, res, next)=>{
-		// console.log('routes.js: retrieveing all users')
 		user.all(req, res)
 	});
 

@@ -25,10 +25,10 @@ class AddNewCar extends Component {
 
   handleChange(property, event) {
     event.preventDefault();
-    this.setState({ [property]: event.target.value });
+    this.setState({ [property]: event.target.value }); //directly changes state's values
   }
 
-  handleSubmit(event) {
+  handleSubmit(event) { //adding a new car
     event.preventDefault();
     let { brand, model, price, color, year, mileage, description } = this.state;
     axios
@@ -42,14 +42,13 @@ class AddNewCar extends Component {
         description
       })
       .then(response => {
-        console.log(response.data._id);
         this.upload(response.data._id);
       })
       .catch(error => console.log(error));
         console.log(this.state)
       
       alert("New car is created!")
-      this.setState({
+      this.setState({ //clearing state
         brand: "",
         model: "",
         price: "",
@@ -57,45 +56,53 @@ class AddNewCar extends Component {
         year: "",
         mileage: "",
         description: "",
-        formShowself: false
+        formShowself: false // Reloading form by disabling and enabling
       }, function(){
         this.setState({
           formShowself: true
         })
       })
-      // window.location.reload();
   }
   onDrop(photo){
-    console.log("PHOTO!", photo);
-    var tempArr = this.state.files;
+    var tempArr = this.state.files; // Hardcode mode ON
     tempArr.push(photo[0]);
     this.setState({
         files: tempArr  // here we store pics in this.state
     })
     console.log(this.state.files);
   }
-  upload(id){
+  upload(id) {
     var counter = 0;
     console.log(id);
     console.log(this.state.files);
-    for(let i = 0; i<this.state.files.length; i++){
+    for (let i = 0; i < this.state.files.length; i++) {
+      if (this.state.files[i]) {
         superagent
-            .post(`/api/upload/cars/${id}`)
-            .attach('item', this.state.files[i]) 
-            .end((error, response) => {
-                if (error) console.log(error);
-                counter++;
-                if(counter===this.state.files.length){
-                  console.log("DAAAAAAAAA");
-                  this.clearPhotos();
-                }
-                console.log('File Uploaded Succesfully'); // Just taking all pics from this.state.files and send them on the back-end and then to s3
-            })                                        // and getting back urls to those pics
+          .post(`/api/upload/cars/${id}`)
+          .attach('item', this.state.files[i])
+          .end((error, response) => {
+            if (error) console.log(error);
+            counter++;
+            if (counter === this.state.files.length) {
+              console.log("DAAAAAAAAA");
+              this.clearPhotos();
+            }
+            console.log('File Uploaded Succesfully'); // Just taking all pics from this.state.files and send them on the back-end and then to s3
+          })
+      }
+      // and getting back urls to those pics
     }
-}
+  }
 clearPhotos(){
   this.setState({
     files: []
+  })
+}
+delete(e, index){
+  var tempFiles = this.state.files;
+  delete tempFiles[index];
+  this.setState({
+    files: tempFiles
   })
 }
 
@@ -206,7 +213,7 @@ clearPhotos(){
                         <h4>Chosen photos</h4>
                         <ul>
                             {this.state.files.length>0 && this.state.files.map((e, i) => <li key={i}>{e.name} - {e.size} bytes <img src={e.preview} className="prevImg" alt={e._id}/>
-                            <button type="button" className="btn btn-danger btn-sm" onClick={() => this.delete(e)} >Remove</button>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => this.delete(e, i)} >Remove</button>
                             </li>) }
                         </ul>
                     </div>

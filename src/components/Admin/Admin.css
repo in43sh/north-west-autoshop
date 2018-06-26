@@ -130,7 +130,7 @@ input:checked + .slider {
     padding: 10px;
     align-content: center;
     background-color: azure;
-    border-radius: 5%;
+    border-radius: 10px;
 }
 .part-btn{
   margin-left: 15px;
