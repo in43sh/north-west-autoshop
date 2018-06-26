@@ -169,76 +169,83 @@
 }
 
 .productprice {
-	border-top:1px solid #dadada;
-	padding-top:5px;
+  border-top: 1px solid #dadada;
+  padding-top: 5px;
 }
 
 .pricetext {
-	font-weight:bold;
-	font-size:1.4em;
+  font-weight: bold;
+  font-size: 1.4em;
 }
 
-.emptyCars{
+.emptyCars {
   height: 75vh;
 }
-.emptyCars-box{
+
+.emptyCars-box {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 15px;
 }
 
 /* SEARCH SWITCHER */
-.switch input { 
-  display:none;
+
+.switch input {
+  display: none;
 }
+
 .switch {
-  display:inline-block;
-  width:60px;
-  height:30px;
-  margin:8px;
-  transform:translateY(50%);
-  position:relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  margin: 8px;
+  transform: translateY(50%);
+  position: relative;
 }
 
 .slider {
-  position:absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
-  border-radius:30px;
-  box-shadow:0 0 0 2px #777, 0 0 4px #777;
-  cursor:pointer;
-  border:4px solid transparent;
-  overflow:hidden;
-  transition:.4s;
-}
-.slider:before {
-  position:absolute;
-  content:"";
-  width:100%;
-  height:100%;
-  background:red;
-  border-radius:30px;
-  transform:translateX(-30px);
-  transition:.4s;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 30px;
+  box-shadow: 0 0 0 2px #777, 0 0 4px #777;
+  cursor: pointer;
+  border: 4px solid transparent;
+  overflow: hidden;
+  transition: .4s;
 }
 
-input:checked + .slider:before {
-  transform:translateX(30px);
-  background:red;
+.slider:before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: red;
+  border-radius: 30px;
+  transform: translateX(-30px);
+  transition: .4s;
 }
-input:checked + .slider {
-  box-shadow:0 0 0 2px red,0 0 2px blue;
+
+input:checked+.slider:before {
+  transform: translateX(30px);
+  background: red;
 }
-#searchBox{
+
+input:checked+.slider {
+  box-shadow: 0 0 0 2px red, 0 0 2px blue;
+}
+
+#searchBox {
   display: flex;
-  
 }
-#searchInput{
+
+#searchInput {
   background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
   margin-top: 5px;
 }
-.searchBoxButtons{
+
+.searchBoxButtons {
   margin-top: 19px;
 }

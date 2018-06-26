@@ -3,24 +3,12 @@
   background-size:cover;
   background-attachment: fixed;
 }
-.parts-main-container {
-  min-height: 92vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  
-}
-.parts-main-container h1{
-  align-self: center;
+
+#main2 {
+  margin: 15px auto;
+  align-content: center;
 }
 
-.parts-item-container img {
-  background-color: yellow;
-}
-
-.parts-img {
-  max-height: 150px;
-}
 #title {
   margin-left:25px;
   color: white;
@@ -28,11 +16,12 @@
 
 #box {
   margin:5px 50px;
-  
 }
+
 #list_name{
   color: white;
 }
+
 #top {
   background-color:#282d32;
   /* border-radius: 15px; */
@@ -62,41 +51,44 @@
   max-width:300px;
 }
 
-@media (max-width: 991px) {
-  #photo {
-    max-width:210px;
-  }
+#searchBox {
+  display: flex;
 }
 
-@media (max-width: 991px) {
-  #top {
-    height:38px;
-  }
+#searchInput {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  margin-top: 5px;
 }
 
-@media (max-width: 991px) {
-  #title {
-    font-size:larger;
-    margin-top:10px;
-  }
+.parts-main-container {
+  min-height: 92vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 991px) {
-  #box {
-    margin:0px 0px;
-    border:1px solid silver;
-  }
+.parts-item-container img {
+  background-color: yellow;
 }
-.emptyParts{
+
+.parts-img {
+  max-height: 150px;
+}
+
+.emptyParts {
   height: 75vh;
 }
+
 .emptyParts-box{
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 15px;
 }
+
 .switch input { 
   display:none;
 }
+
 .switch {
   display:inline-block;
   width:60px;
@@ -119,6 +111,7 @@
   overflow:hidden;
   transition:.4s;
 }
+
 .slider:before {
   position:absolute;
   content:"";
@@ -134,26 +127,35 @@ input:checked + .slider:before {
   transform:translateX(30px);
   background:red;
 }
+
 input:checked + .slider {
   box-shadow:0 0 0 2px red,0 0 2px blue;
 }
-#searchBox{
-  display: flex;
-  
-}
-#searchInput{
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 5px;
-  margin-top: 5px;
-}
-.searchBoxButtons{
+
+.searchBoxButtons {
   margin-top: 19px;
 }
 
-#main2{
-  margin: 15px auto;
-  align-content: center;
-}
-h3.switch{
+h3.switch {
   color: #fcc500;
+}
+
+@media (max-width: 991px) {
+  #photo {
+    max-width:210px;
+  }
+
+  #top {
+    height:38px;
+  }
+
+  #title {
+    font-size:larger;
+    margin-top:10px;
+  }
+
+  #box {
+    margin:0px 0px;
+    border:1px solid silver;
+  }
 }

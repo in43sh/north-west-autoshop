@@ -175,7 +175,7 @@ export default class Parts extends Component {
             </div>
           </Link>
         )})
-      }else{
+      } else {
         listOfParts = '';
       }
     var listOfBrands = [];

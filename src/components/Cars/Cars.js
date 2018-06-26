@@ -151,8 +151,13 @@ export default class Cars extends Component {
                   </div>
                   <div className="row">
                       <div className="col-md-4">
+                      {/* 
+                        not sure which css is right. have to check
                         {car.photos.length === 0 && <img src={aws} alt="car" id="car-photo"/>} 
                         {car.photos.length>0 && <img src={car.photos[0]} alt="car" id="car-photo"/>}
+                      */}
+                        {car.photos.length === 0 && <img src={aws} alt="part" className="photos"/>} 
+                        {car.photos.length>0 && <img src={car.photos[0]} alt="part" className="photos"/>}
                       </div>
                       <div className="col-md-4">
                           <p id="model">{ car.mileage } miles, Color: { car.color }</p>
