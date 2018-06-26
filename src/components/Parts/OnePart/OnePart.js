@@ -46,7 +46,7 @@ export default class OneCar extends Component {
       return (
         <div key={ index }>
           <div className="slider-container">
-          <img className="slider-container-img" src={ element } alt="hui"/>
+            <img className="slider-container-img" src={ element } alt="hui"/>
           </div>
         </div>
       )
@@ -78,8 +78,7 @@ export default class OneCar extends Component {
                 <div className="col-md-4">
                   <p id="price">${this.state.part.price}</p>
                 </div>
-              </div>
-                
+              </div>   
             </div>
           </div>
         </div>
