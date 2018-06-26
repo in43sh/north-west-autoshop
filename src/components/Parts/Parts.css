@@ -156,6 +156,6 @@ h3.switch {
 
   #box {
     margin:0px 0px;
-    border:1px solid silver;
+    /* border:1px solid silver; */
   }
 }
