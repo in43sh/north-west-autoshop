@@ -65,7 +65,7 @@ export default class OneCar extends Component {
               </div>
               <div className="row">
                 <div className="col-md-12 slider-parent-container">
-                  {this.state.photos.length === 0 && <img className="empty-part-img" src={aws} alt="default image of a car" id="noImage"/>}
+                  {this.state.photos.length === 0 && <img className="photos" src={aws} alt="default image of a car"/>}
                   {this.state.part.photos && <Slider className="slider-component" {...settings}>
                     { display }
                     </Slider> }

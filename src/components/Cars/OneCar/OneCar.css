@@ -41,9 +41,7 @@
   max-height: 150px;
 }
 
-.empty-car-img {
-  max-width: 90%;
-}
+
 
 #title {
   margin-left: 25px;
@@ -51,7 +49,6 @@
 }
 
 #oneCar {
-  margin: 5px 50px;
   height: 90vh;
   margin-bottom: -20px;
 }
@@ -94,10 +91,9 @@
 }
 
 .slider-parent-container {
-  display: flex;
-  justify-content: center;
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .slide-container-img {
@@ -140,7 +136,7 @@
 
   #box {
     margin: 0px 0px;
-    border: 1px solid silver;
+    /* border: 1px solid silver; */
   }
 
   .slider-parent-container {
