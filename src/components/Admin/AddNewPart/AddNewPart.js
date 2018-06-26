@@ -19,7 +19,7 @@ export default class AddNewPart extends Component {
 
   handleChange(property, event) {
     event.preventDefault();
-    this.setState({ [property]: event.target.value });
+    this.setState({ [property]: event.target.value }); // directly changing state's values
   }
 
   handleSubmit(event) {
@@ -47,7 +47,7 @@ export default class AddNewPart extends Component {
         console.log(response);
         alert("New part was created!");
         this.setState({
-          formShowself: false
+          formShowself: false //Refreshing the form
         }, function(){
           this.setState({
             formShowself: true

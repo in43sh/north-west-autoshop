@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import aws from "../../images/aws.png"
 import Navbar from "../../Navbar/Navbar";
 import Slider from 'react-slick';
-// import { Link } from 'react-router-dom';
 import "./OnePart.css";
 
 export default class OneCar extends Component {
@@ -65,9 +65,10 @@ export default class OneCar extends Component {
               </div>
               <div className="row">
                 <div className="col-md-12 slider-parent-container">
-                  <Slider className="slider-component" {...settings}>
+                  {this.state.photos.length === 0 && <img className="empty-part-img" src={aws} alt="default image of a car" id="noImage"/>}
+                  {this.state.part.photos && <Slider className="slider-component" {...settings}>
                     { display }
-                  </Slider>
+                    </Slider> }
                 </div>
               </div>
               <div className="row">

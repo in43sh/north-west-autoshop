@@ -34,13 +34,12 @@ class Admin extends Component {
       container: null
     };
   }
-
+/// oh boy, here we go. 
   componentDidMount() {
     axios.get('/user/data')
     .then(response => {
-      // console.log(response);
       if (response.data.user) {
-        this.props.login(response.data.user);
+        this.props.login(response.data.user); // adding admin to session
       }
     })
     .catch(error => console.log(error))
