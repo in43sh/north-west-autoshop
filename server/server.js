@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const jsonParser = require('body-parser').json();
+const path = require('path');
 app.use(bodyParser.json()); 
 const mongoose = require('mongoose');
 
@@ -26,7 +27,6 @@ app.use( session({
 }) );
 // app.use( checkForSession );
 app.use(bodyParser.urlencoded({ extended: true }));
-const path = require('path');
 app.use(express.static(path.join(__dirname, '/client/dist')));
 const routes_setter = require('./config/routes.js');
 routes_setter(app);
