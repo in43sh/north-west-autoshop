@@ -36,7 +36,7 @@ export default class Top extends Component {
                     <div className="container">
                         <div className="intro">
                             <h2 className="text-center">Northern European Auto Recycle</h2>
-                            <p className="text-center" style={{ color: "black" }}>One of the best maintenace shop in Seattle. We are focused on european brands such as Volvo, Saab, BWM, Mercedes, and Audi. Affortable prices guarantee.</p>
+                            <p className="text-center" style={{ color: "black" }}>One of the best maintenance shop in Seattle. We are focused on european brands such as Volvo, Saab, BWM, Mercedes, and Audi. Affortable prices guarantee.</p>
                         </div>
                         <div className="row justify-content-center align-items-center projects">
                             <Scroll type="id" element="_contact">

@@ -48,7 +48,7 @@
 #_contact{
     
     /* font-family: 'Teko', sans-serif; */
-  padding-top: 60px;
+  /* padding-top: 60px; */
   /* margin-bottom: 50px; */
   width: 100%;
   width: 100vw;
@@ -98,11 +98,15 @@ textarea.form-control {
 
 .popup-container {
   position: absolute;
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  margin: 0px auto;
 }
 
 .popup-element {
   width: 100px; 
+}
+#popupDiv{
+  margin-top: 0px;
 }

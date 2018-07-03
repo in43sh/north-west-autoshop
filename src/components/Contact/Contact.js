@@ -21,11 +21,11 @@ export default class Contact extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(event)
     let { name, phone, message } = this.state;
     axios.post('/requests/new', { name, phone, message })
       .then(response => {
         console.log(response);
+        this.togglePopup();
       })
       .catch(error => console.log(error))
   }
@@ -63,7 +63,9 @@ export default class Contact extends Component {
                     <textarea  className="form-control" id="description" placeholder="Enter Your Message" onChange={(event) => this.handleChange("message", event)}></textarea>
                 </div>
                 <div>
-                  <button onClick={this.togglePopup.bind(this)} type="submit" value="Send"  className="btn btn-default submit"><i className="fa fa-paper-plane" aria-hidden="true"></i>  Send Message</button>
+
+                  <button onClick={(event) => this.handleSubmit(event)} type="submit" value="Send"  className="btn btn-default submit"><i className="fa fa-paper-plane" aria-hidden="true"></i>  Send Message</button>
+                  {/* <button onClick={this.togglePopup.bind(this)} type="submit" value="Send"  className="btn btn-default submit"><i className="fa fa-paper-plane" aria-hidden="true"></i>  Send Message</button> */}
                 </div>
             </div>
             
@@ -71,7 +73,7 @@ export default class Contact extends Component {
         </div>
         : null}
       </div>
-      <div className="contact-section">
+      <div className="contact-section" id="popupDiv">
         <div className="popup-container">
           {this.state.showPopup ?
             <Popup className="popup-element" closePopup={this.togglePopup.bind(this)} /> : null
