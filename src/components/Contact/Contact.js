@@ -41,7 +41,7 @@ export default class Contact extends Component {
     <div id="_contact">
       <div className="section-content">
         <h1 className="section-header">Get in <span className="content-header wow fadeIn " data-wow-delay="0.2s" data-wow-duration="2s"> Touch with us</span></h1>
-        <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h3>
+        <h3>Describe your issue and leave us your contact info, we’ll get back to you as soon as possible.</h3>
       </div>
       <div className="contact-section">
         {!this.state.showPopup ?
